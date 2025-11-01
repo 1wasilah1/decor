@@ -4,7 +4,7 @@ module.exports = {
       name: 'decor-frontend',
       cwd: './frontend',
       script: 'npm',
-      args: 'run dev -- -p 8600',
+      args: 'run dev -- --port 8600',
       env: {
         NODE_ENV: 'development'
       }
@@ -13,7 +13,14 @@ module.exports = {
       name: 'decor-backend',
       cwd: './backend',
       script: 'npm',
-      args: 'run dev -- --port 8700',
+      args: 'run dev',
+      env: {
+        NODE_ENV: 'development',
+        PORT: 8700
+      }
+    }
+  ]
+};
       env: {
         NODE_ENV: 'development'
       }
