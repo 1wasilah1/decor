@@ -10,6 +10,8 @@
 !.yarn/releases
 !.yarn/versions
 mockup
+/frontend/.next/
+/frontend/node_modules/
 # testing
 /coverage
 

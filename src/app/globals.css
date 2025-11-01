@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --primary: #1a365d;
+  --secondary: #2d3748;
+  --accent: #e53e3e;
+  --neutral: #f7fafc;
+  --woodmart-primary: #1a365d;
+  --woodmart-secondary: #2d3748;
+  --woodmart-accent: #e53e3e;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-neutral: var(--neutral);
+  --font-sans: var(--font-lato);
+  --font-heading: var(--font-urbanist);
+  --font-display: var(--font-signika);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-lato), Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-urbanist), sans-serif;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* Woodmart theme colors */
+.text-woodmart-primary { color: var(--woodmart-primary); }
+.bg-woodmart-primary { background-color: var(--woodmart-primary); }
+.text-woodmart-secondary { color: var(--woodmart-secondary); }
+.bg-woodmart-secondary { background-color: var(--woodmart-secondary); }
+.text-woodmart-accent { color: var(--woodmart-accent); }
+.bg-woodmart-accent { background-color: var(--woodmart-accent); }
