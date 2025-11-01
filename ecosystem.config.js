@@ -3,18 +3,16 @@ module.exports = {
     {
       name: 'decor-frontend',
       cwd: './frontend',
-      script: 'npm',
-      args: 'start',
+      script: 'node_modules/.bin/next',
+      args: 'start -p 8600',
       env: {
-        NODE_ENV: 'production',
-        PORT: 8600
+        NODE_ENV: 'production'
       }
     },
     {
       name: 'decor-backend',
       cwd: './backend',
-      script: 'npm',
-      args: 'start',
+      script: 'index.js',
       env: {
         NODE_ENV: 'production',
         PORT: 8700
