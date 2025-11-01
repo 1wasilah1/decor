@@ -15,7 +15,7 @@ export default function Services() {
             Trusted by Leading Brands
           </h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto font-sans">
-            From global names to local heroes — here are some of the partners who've trusted us:
+            From global names to local heroes — here are some of the partners who&apos;ve trusted us:
           </p>
         </div>
 

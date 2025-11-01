@@ -27,7 +27,7 @@ export default function ContactForm() {
             We Create Immersive Spaces
           </h2>
           <p className="text-lg text-gray-600 max-w-4xl mx-auto font-sans leading-relaxed">
-            Elevate your brand presence with our premium booth and exhibition design services. Our expert team ensures a seamless, customized experience that captures your brand's essence and engages your audience.
+            Elevate your brand presence with our premium booth and exhibition design services. Our expert team ensures a seamless, customized experience that captures your brand&apos;s essence and engages your audience.
           </p>
         </div>
 
