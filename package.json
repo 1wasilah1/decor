@@ -7,14 +7,20 @@
     "install:frontend": "cd frontend && npm install",
     "install:backend": "cd backend && npm install",
     "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
-    "dev:frontend": "cd frontend && npm run dev",
-    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev -- -p 8600",
+    "dev:backend": "cd backend && npm run dev -- --port 8700",
     "build": "npm run build:frontend && npm run build:backend",
     "build:frontend": "cd frontend && npm run build",
     "build:backend": "cd backend && npm run build",
     "start": "concurrently \"npm run start:backend\" \"npm run start:frontend\"",
     "start:frontend": "cd frontend && npm start",
-    "start:backend": "cd backend && npm start"
+    "start:backend": "cd backend && npm start",
+    "pm2:start": "pm2 start ecosystem.config.js",
+    "pm2:stop": "pm2 stop ecosystem.config.js",
+    "pm2:restart": "pm2 restart ecosystem.config.js",
+    "pm2:delete": "pm2 delete ecosystem.config.js",
+    "pm2:logs": "pm2 logs",
+    "pm2:status": "pm2 status"
   },
   "devDependencies": {
     "concurrently": "^8.2.2"

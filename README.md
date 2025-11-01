@@ -60,10 +60,18 @@ npm run start:backend
 - `npm run build` - Build both projects for production
 - `npm run start` - Start both services in production mode
 
+### PM2 Process Management
+- `npm run pm2:start` - Start both services with PM2
+- `npm run pm2:stop` - Stop PM2 processes
+- `npm run pm2:restart` - Restart PM2 processes
+- `npm run pm2:delete` - Delete PM2 processes
+- `npm run pm2:logs` - View PM2 logs
+- `npm run pm2:status` - Check PM2 status
+
 ## Services
 
-- **Frontend**: http://localhost:3000 (Next.js)
-- **Backend**: http://localhost:5000 (Node.js/Express)
+- **Frontend**: http://localhost:8600 (Next.js)
+- **Backend**: http://localhost:8700 (Node.js/Express)
 
 ## Technologies
 
