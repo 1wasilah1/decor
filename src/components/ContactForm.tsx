@@ -24,10 +24,12 @@ export default function ContactForm() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6 font-display">
-            We Create Immersive Spaces
+            We create aesthetic and engaging designs
           </h2>
           <p className="text-lg text-gray-600 max-w-4xl mx-auto font-sans leading-relaxed">
-            Elevate your brand presence with our premium booth and exhibition design services. Our expert team ensures a seamless, customized experience that captures your brand&apos;s essence and engages your audience.
+            With our premium booth and exhibition design services, you can increase your brand&apos;s visibility.
+            <br /><br />
+            Our professionals will assist you in developing a welcoming and approachable experience that embodies your brand values and draws in clients.
           </p>
         </div>
 
