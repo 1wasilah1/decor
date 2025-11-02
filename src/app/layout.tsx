@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Lato, Urbanist, Signika } from "next/font/google";
 import "./globals.css";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const lato = Lato({
   subsets: ["latin"],
@@ -21,8 +22,8 @@ const signika = Signika({
 });
 
 export const metadata: Metadata = {
-  title: "Save Decor - Interior Design Solutions",
-  description: "Professional interior design services for your home and office",
+  title: "PT. Multi Tritama Persada - Exhibition & Interior Design",
+  description: "Professional exhibition and interior design services",
 };
 
 export default function RootLayout({
@@ -35,7 +36,9 @@ export default function RootLayout({
       <body
         className={`${lato.variable} ${urbanist.variable} ${signika.variable} font-sans antialiased`}
       >
-        {children}
+        <LanguageProvider>
+          {children}
+        </LanguageProvider>
       </body>
     </html>
   );

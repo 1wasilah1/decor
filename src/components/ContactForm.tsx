@@ -1,35 +1,39 @@
+'use client';
 import Image from 'next/image';
-
-const services = [
-  {
-    title: "Whole Exhibition",
-    description: "Comprehensive solutions from concept to completion. Stunning designs that captivate and engage. Seamless project management for a hassle-free experience.",
-    image: "/images/service1.png"
-  },
-  {
-    title: "Visual Merchandising",
-    description: "Attract and engage shoppers effortlessly. Customized to highlight your brand's unique appeal.",
-    image: "/images/service2.png"
-  },
-  {
-    title: "Commercial",
-    description: "Drive business success with our innovative commercial spaces. Designed for functionality and aesthetics.",
-    image: "/images/service3.png"
-  }
-];
+import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function ContactForm() {
+  const { t } = useLanguage();
+
+  const services = [
+    {
+      title: t('wholeExhibition'),
+      description: t('wholeExhibitionDesc'),
+      image: "/images/service1.png"
+    },
+    {
+      title: t('visualMerchandising'),
+      description: t('visualMerchandisingDesc'),
+      image: "/images/service2.png"
+    },
+    {
+      title: t('commercial'),
+      description: t('commercialDesc'),
+      image: "/images/service3.png"
+    }
+  ];
+
   return (
     <section className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6 font-display">
-            We create aesthetic and engaging designs
+            {t('aestheticDesigns')}
           </h2>
           <p className="text-lg text-gray-600 max-w-4xl mx-auto font-sans leading-relaxed">
-            With our premium booth and exhibition design services, you can increase your brand&apos;s visibility.
+            {t('aestheticDesc1')}
             <br /><br />
-            Our professionals will assist you in developing a welcoming and approachable experience that embodies your brand values and draws in clients.
+            {t('aestheticDesc2')}
           </p>
         </div>
 
@@ -42,6 +46,7 @@ export default function ContactForm() {
                   alt={service.title}
                   fill
                   className="object-cover transition-transform duration-300 group-hover:scale-105"
+                  unoptimized
                 />
                 <div className="absolute inset-0 bg-black bg-opacity-40" />
                 <div className="absolute inset-0 p-6 flex flex-col justify-end text-white">
