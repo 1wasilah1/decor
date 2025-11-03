@@ -36,23 +36,36 @@ export default function SectionSettingsPage() {
     loadSettings(section);
   };
 
+  const getStringValue = (key: string): string => {
+    const value = settings[key];
+    return typeof value === 'string' ? value : '';
+  };
+
+  const getArrayValue = (key: string): unknown[] => {
+    const value = settings[key];
+    return Array.isArray(value) ? value : [];
+  };
+
   const handleChange = (field: string, value: unknown) => {
     setSettings({ ...settings, [field]: value });
   };
 
   const handleArrayChange = (field: string, index: number, value: string) => {
-    const arr = [...(settings[field] || [])];
+    const current = settings[field];
+    const arr = Array.isArray(current) ? [...current] : [];
     arr[index] = value;
     setSettings({ ...settings, [field]: arr });
   };
 
   const addArrayItem = (field: string) => {
-    const arr = [...(settings[field] || []), ''];
+    const current = settings[field];
+    const arr = Array.isArray(current) ? [...current, ''] : [''];
     setSettings({ ...settings, [field]: arr });
   };
 
   const removeArrayItem = (field: string, index: number) => {
-    const arr = [...(settings[field] || [])];
+    const current = settings[field];
+    const arr = Array.isArray(current) ? [...current] : [];
     arr.splice(index, 1);
     setSettings({ ...settings, [field]: arr });
   };
@@ -104,7 +117,7 @@ export default function SectionSettingsPage() {
                 <label className="block text-black font-semibold mb-2">Title</label>
                 <input
                   type="text"
-                  value={settings.title || ''}
+                  value={getStringValue('title')}
                   onChange={(e) => handleChange('title', e.target.value)}
                   className="w-full p-3 border rounded text-black"
                 />
@@ -112,7 +125,7 @@ export default function SectionSettingsPage() {
               <div>
                 <label className="block text-black font-semibold mb-2">Subtitle</label>
                 <textarea
-                  value={settings.subtitle || ''}
+                  value={getStringValue('subtitle')}
                   onChange={(e) => handleChange('subtitle', e.target.value)}
                   className="w-full p-3 border rounded text-black"
                   rows={3}
@@ -122,7 +135,7 @@ export default function SectionSettingsPage() {
                 <label className="block text-black font-semibold mb-2">Button Text</label>
                 <input
                   type="text"
-                  value={settings.buttonText || ''}
+                  value={getStringValue('buttonText')}
                   onChange={(e) => handleChange('buttonText', e.target.value)}
                   className="w-full p-3 border rounded text-black"
                 />
@@ -131,7 +144,7 @@ export default function SectionSettingsPage() {
                 <label className="block text-black font-semibold mb-2">Image Path</label>
                 <input
                   type="text"
-                  value={settings.image || ''}
+                  value={getStringValue('image')}
                   onChange={(e) => handleChange('image', e.target.value)}
                   className="w-full p-3 border rounded text-black"
                 />
@@ -145,7 +158,7 @@ export default function SectionSettingsPage() {
                 <label className="block text-black font-semibold mb-2">Title</label>
                 <input
                   type="text"
-                  value={settings.title || ''}
+                  value={getStringValue('title')}
                   onChange={(e) => handleChange('title', e.target.value)}
                   className="w-full p-3 border rounded text-black"
                 />
@@ -153,7 +166,7 @@ export default function SectionSettingsPage() {
               <div>
                 <label className="block text-black font-semibold mb-2">Description</label>
                 <textarea
-                  value={settings.description || ''}
+                  value={getStringValue('description')}
                   onChange={(e) => handleChange('description', e.target.value)}
                   className="w-full p-3 border rounded text-black"
                   rows={3}
@@ -161,11 +174,11 @@ export default function SectionSettingsPage() {
               </div>
               <div>
                 <label className="block text-black font-semibold mb-2">Brands</label>
-                {(settings.brands || []).map((brand: string, index: number) => (
+                {getArrayValue('brands').map((brand, index) => (
                   <div key={index} className="flex gap-2 mb-2">
                     <input
                       type="text"
-                      value={brand}
+                      value={String(brand)}
                       onChange={(e) => handleArrayChange('brands', index, e.target.value)}
                       className="flex-1 p-2 border rounded text-black"
                     />
@@ -187,7 +200,7 @@ export default function SectionSettingsPage() {
                 <label className="block text-black font-semibold mb-2">Subtitle</label>
                 <input
                   type="text"
-                  value={settings.subtitle || ''}
+                  value={getStringValue('subtitle')}
                   onChange={(e) => handleChange('subtitle', e.target.value)}
                   className="w-full p-3 border rounded text-black"
                 />
@@ -196,7 +209,7 @@ export default function SectionSettingsPage() {
                 <label className="block text-black font-semibold mb-2">Title</label>
                 <input
                   type="text"
-                  value={settings.title || ''}
+                  value={getStringValue('title')}
                   onChange={(e) => handleChange('title', e.target.value)}
                   className="w-full p-3 border rounded text-black"
                 />
@@ -204,7 +217,7 @@ export default function SectionSettingsPage() {
               <div>
                 <label className="block text-black font-semibold mb-2">Description</label>
                 <textarea
-                  value={settings.description || ''}
+                  value={getStringValue('description')}
                   onChange={(e) => handleChange('description', e.target.value)}
                   className="w-full p-3 border rounded text-black"
                   rows={3}
@@ -212,11 +225,11 @@ export default function SectionSettingsPage() {
               </div>
               <div>
                 <label className="block text-black font-semibold mb-2">Why Us Items</label>
-                {(settings.whyUs || []).map((item: string, index: number) => (
+                {getArrayValue('whyUs').map((item, index) => (
                   <div key={index} className="flex gap-2 mb-2">
                     <input
                       type="text"
-                      value={item}
+                      value={String(item)}
                       onChange={(e) => handleArrayChange('whyUs', index, e.target.value)}
                       className="flex-1 p-2 border rounded text-black"
                     />
@@ -238,7 +251,7 @@ export default function SectionSettingsPage() {
                 <label className="block text-black font-semibold mb-2">Title</label>
                 <input
                   type="text"
-                  value={settings.title || ''}
+                  value={getStringValue('title')}
                   onChange={(e) => handleChange('title', e.target.value)}
                   className="w-full p-3 border rounded text-black"
                 />
@@ -246,7 +259,7 @@ export default function SectionSettingsPage() {
               <div>
                 <label className="block text-black font-semibold mb-2">Description</label>
                 <textarea
-                  value={settings.description || ''}
+                  value={getStringValue('description')}
                   onChange={(e) => handleChange('description', e.target.value)}
                   className="w-full p-3 border rounded text-black"
                   rows={4}
@@ -261,7 +274,7 @@ export default function SectionSettingsPage() {
                 <label className="block text-black font-semibold mb-2">Title</label>
                 <input
                   type="text"
-                  value={settings.title || ''}
+                  value={getStringValue('title')}
                   onChange={(e) => handleChange('title', e.target.value)}
                   className="w-full p-3 border rounded text-black"
                 />
@@ -286,7 +299,7 @@ export default function SectionSettingsPage() {
             <>
               <div>
                 <label className="block text-black font-semibold mb-2">Title</label>
-                <input type="text" value={settings.title || ''} onChange={(e) => handleChange('title', e.target.value)} className="w-full p-3 border rounded text-black" />
+                <input type="text" value={getStringValue('title')} onChange={(e) => handleChange('title', e.target.value)} className="w-full p-3 border rounded text-black" />
               </div>
               <div>
                 <label className="block text-black font-semibold mb-2">Services (JSON)</label>
@@ -299,11 +312,11 @@ export default function SectionSettingsPage() {
             <>
               <div>
                 <label className="block text-black font-semibold mb-2">Title</label>
-                <input type="text" value={settings.title || ''} onChange={(e) => handleChange('title', e.target.value)} className="w-full p-3 border rounded text-black" />
+                <input type="text" value={getStringValue('title')} onChange={(e) => handleChange('title', e.target.value)} className="w-full p-3 border rounded text-black" />
               </div>
               <div>
                 <label className="block text-black font-semibold mb-2">Description</label>
-                <textarea value={settings.description || ''} onChange={(e) => handleChange('description', e.target.value)} className="w-full p-3 border rounded text-black" rows={3} />
+                <textarea value={getStringValue('description')} onChange={(e) => handleChange('description', e.target.value)} className="w-full p-3 border rounded text-black" rows={3} />
               </div>
             </>
           )}
@@ -312,15 +325,15 @@ export default function SectionSettingsPage() {
             <>
               <div>
                 <label className="block text-black font-semibold mb-2">Title</label>
-                <input type="text" value={settings.title || ''} onChange={(e) => handleChange('title', e.target.value)} className="w-full p-3 border rounded text-black" />
+                <input type="text" value={getStringValue('title')} onChange={(e) => handleChange('title', e.target.value)} className="w-full p-3 border rounded text-black" />
               </div>
               <div>
                 <label className="block text-black font-semibold mb-2">Description</label>
-                <textarea value={settings.description || ''} onChange={(e) => handleChange('description', e.target.value)} className="w-full p-3 border rounded text-black" rows={2} />
+                <textarea value={getStringValue('description')} onChange={(e) => handleChange('description', e.target.value)} className="w-full p-3 border rounded text-black" rows={2} />
               </div>
               <div>
                 <label className="block text-black font-semibold mb-2">Instagram URL</label>
-                <input type="text" value={settings.url || ''} onChange={(e) => handleChange('url', e.target.value)} className="w-full p-3 border rounded text-black" />
+                <input type="text" value={getStringValue('url')} onChange={(e) => handleChange('url', e.target.value)} className="w-full p-3 border rounded text-black" />
               </div>
               <div>
                 <label className="block text-black font-semibold mb-2">Posts (JSON)</label>
@@ -333,11 +346,11 @@ export default function SectionSettingsPage() {
             <>
               <div>
                 <label className="block text-black font-semibold mb-2">Title</label>
-                <input type="text" value={settings.title || ''} onChange={(e) => handleChange('title', e.target.value)} className="w-full p-3 border rounded text-black" />
+                <input type="text" value={getStringValue('title')} onChange={(e) => handleChange('title', e.target.value)} className="w-full p-3 border rounded text-black" />
               </div>
               <div>
                 <label className="block text-black font-semibold mb-2">Description</label>
-                <textarea value={settings.description || ''} onChange={(e) => handleChange('description', e.target.value)} className="w-full p-3 border rounded text-black" rows={3} />
+                <textarea value={getStringValue('description')} onChange={(e) => handleChange('description', e.target.value)} className="w-full p-3 border rounded text-black" rows={3} />
               </div>
             </>
           )}
@@ -346,19 +359,19 @@ export default function SectionSettingsPage() {
             <>
               <div>
                 <label className="block text-black font-semibold mb-2">Subtitle</label>
-                <input type="text" value={settings.subtitle || ''} onChange={(e) => handleChange('subtitle', e.target.value)} className="w-full p-3 border rounded text-black" />
+                <input type="text" value={getStringValue('subtitle')} onChange={(e) => handleChange('subtitle', e.target.value)} className="w-full p-3 border rounded text-black" />
               </div>
               <div>
                 <label className="block text-black font-semibold mb-2">Title</label>
-                <input type="text" value={settings.title || ''} onChange={(e) => handleChange('title', e.target.value)} className="w-full p-3 border rounded text-black" />
+                <input type="text" value={getStringValue('title')} onChange={(e) => handleChange('title', e.target.value)} className="w-full p-3 border rounded text-black" />
               </div>
               <div>
                 <label className="block text-black font-semibold mb-2">WhatsApp Number</label>
-                <input type="text" value={settings.whatsappNumber || ''} onChange={(e) => handleChange('whatsappNumber', e.target.value)} className="w-full p-3 border rounded text-black" />
+                <input type="text" value={getStringValue('whatsappNumber')} onChange={(e) => handleChange('whatsappNumber', e.target.value)} className="w-full p-3 border rounded text-black" />
               </div>
               <div>
                 <label className="block text-black font-semibold mb-2">WhatsApp Message</label>
-                <textarea value={settings.whatsappMessage || ''} onChange={(e) => handleChange('whatsappMessage', e.target.value)} className="w-full p-3 border rounded text-black" rows={2} />
+                <textarea value={getStringValue('whatsappMessage')} onChange={(e) => handleChange('whatsappMessage', e.target.value)} className="w-full p-3 border rounded text-black" rows={2} />
               </div>
             </>
           )}
@@ -367,19 +380,19 @@ export default function SectionSettingsPage() {
             <>
               <div>
                 <label className="block text-black font-semibold mb-2">Company Name</label>
-                <input type="text" value={settings.companyName || ''} onChange={(e) => handleChange('companyName', e.target.value)} className="w-full p-3 border rounded text-black" />
+                <input type="text" value={getStringValue('companyName')} onChange={(e) => handleChange('companyName', e.target.value)} className="w-full p-3 border rounded text-black" />
               </div>
               <div>
                 <label className="block text-black font-semibold mb-2">Description</label>
-                <textarea value={settings.description || ''} onChange={(e) => handleChange('description', e.target.value)} className="w-full p-3 border rounded text-black" rows={2} />
+                <textarea value={getStringValue('description')} onChange={(e) => handleChange('description', e.target.value)} className="w-full p-3 border rounded text-black" rows={2} />
               </div>
               <div>
                 <label className="block text-black font-semibold mb-2">Address</label>
-                <textarea value={settings.address || ''} onChange={(e) => handleChange('address', e.target.value)} className="w-full p-3 border rounded text-black" rows={3} />
+                <textarea value={getStringValue('address')} onChange={(e) => handleChange('address', e.target.value)} className="w-full p-3 border rounded text-black" rows={3} />
               </div>
               <div>
                 <label className="block text-black font-semibold mb-2">Instagram URL</label>
-                <input type="text" value={settings.instagram || ''} onChange={(e) => handleChange('instagram', e.target.value)} className="w-full p-3 border rounded text-black" />
+                <input type="text" value={getStringValue('instagram')} onChange={(e) => handleChange('instagram', e.target.value)} className="w-full p-3 border rounded text-black" />
               </div>
             </>
           )}
@@ -388,15 +401,15 @@ export default function SectionSettingsPage() {
             <>
               <div>
                 <label className="block text-black font-semibold mb-2">Phone Number</label>
-                <input type="text" value={settings.phoneNumber || ''} onChange={(e) => handleChange('phoneNumber', e.target.value)} className="w-full p-3 border rounded text-black" />
+                <input type="text" value={getStringValue('phoneNumber')} onChange={(e) => handleChange('phoneNumber', e.target.value)} className="w-full p-3 border rounded text-black" />
               </div>
               <div>
                 <label className="block text-black font-semibold mb-2">Default Message</label>
-                <textarea value={settings.message || ''} onChange={(e) => handleChange('message', e.target.value)} className="w-full p-3 border rounded text-black" rows={2} />
+                <textarea value={getStringValue('message')} onChange={(e) => handleChange('message', e.target.value)} className="w-full p-3 border rounded text-black" rows={2} />
               </div>
               <div>
                 <label className="block text-black font-semibold mb-2">Button Text</label>
-                <input type="text" value={settings.buttonText || ''} onChange={(e) => handleChange('buttonText', e.target.value)} className="w-full p-3 border rounded text-black" />
+                <input type="text" value={getStringValue('buttonText')} onChange={(e) => handleChange('buttonText', e.target.value)} className="w-full p-3 border rounded text-black" />
               </div>
             </>
           )}
