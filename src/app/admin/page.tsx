@@ -13,15 +13,11 @@ export default function AdminPage() {
   const [token, setToken] = useState('');
   const [activeTab, setActiveTab] = useState<'sections' | 'menus'>('sections');
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const savedToken = localStorage.getItem('authToken');
-      if (savedToken) {
-        setToken(savedToken);
-        setIsLoggedIn(true);
-      }
-    }
-  }, []);
+  const logout = () => {
+    localStorage.removeItem('authToken');
+    setToken('');
+    setIsLoggedIn(false);
+  };
 
   const loadSections = async () => {
     try {
@@ -41,7 +37,17 @@ export default function AdminPage() {
   };
 
   useEffect(() => {
-    if (isLoggedIn) loadSections();
+    if (typeof window !== 'undefined') {
+      const savedToken = localStorage.getItem('authToken');
+      if (savedToken) {
+        setToken(savedToken);
+        setIsLoggedIn(true);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (isLoggedIn && token) loadSections();
   }, [isLoggedIn, token]);
 
   const login = async () => {
@@ -64,14 +70,6 @@ export default function AdminPage() {
       alert('Gagal login');
     }
   };
-
-  const logout = () => {
-    localStorage.removeItem('authToken');
-    setToken('');
-    setIsLoggedIn(false);
-  };
-
-
 
   const toggleVisible = (index: number) => {
     if (activeTab === 'sections') {

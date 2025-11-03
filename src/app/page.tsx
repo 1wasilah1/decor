@@ -38,12 +38,12 @@ const components: Record<string, React.ComponentType> = {
 };
 
 export default function Home() {
-  const [sections, setSections] = useState<any[]>([]);
+  const [sections, setSections] = useState<{id: string; visible: boolean; order: number}[]>([]);
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8700/api'}/sections-public`)
       .then(res => res.json())
-      .then(data => setSections(data.sections.filter((s: {visible: boolean}) => s.visible).sort((a: {order: number}, b: {order: number}) => a.order - b.order)))
+      .then((data: {sections: {id: string; visible: boolean; order: number}[]}) => setSections(data.sections.filter(s => s.visible).sort((a, b) => a.order - b.order)))
       .catch(() => {});
   }, []);
 

@@ -25,11 +25,11 @@ export default function SectionSettingsPage() {
     const savedToken = localStorage.getItem('authToken');
     if (!savedToken) {
       router.push('/admin');
-      return;
+    } else if (savedToken !== token) {
+      setToken(savedToken);
+      loadSettings('hero');
     }
-    setToken(savedToken);
-    loadSettings('hero');
-  }, [router]);
+  }, [router, token]);
 
   const handleSectionChange = (section: string) => {
     setActiveSection(section);
