@@ -16,7 +16,8 @@ module.exports = {
       args: 'start',
       env: {
         PORT: 8600,
-        NODE_ENV: 'production'
+        NODE_ENV: 'production',
+        NEXT_PUBLIC_API_URL: 'https://apidecor.kelolahrd.life/api'
       }
     }
   ]
