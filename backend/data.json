@@ -1,0 +1,239 @@
+{
+  "sectionSettings": {
+    "hero": {
+      "title": "Exhibition Design Excellence",
+      "subtitle": "Creating Memorable Brand Experiences Through Innovative Design",
+      "buttonText": "Discover Now",
+      "image": "/images/hero-image.png"
+    },
+    "services": {
+      "title": "Trusted by Leading Brands",
+      "description": "We have worked with various leading brands to create exceptional exhibition experiences",
+      "brands": ["injourney", "UNIQLO", "VERSACE", "DIOR", "LANCÔME", "SOMETHINC", "sociolla", "SKINTIFIC", "ARTISAN", "smeg", "SKIN1004", "harlette", "HINT", "azarine", "kojie.san", "barenbliss", "buttonscarves", "Y.O.U", "beauty haul", "JUDYDOLL", "Good Day", "PASSION", "bridestory", "CHAGEE", "kibo"]
+    },
+    "workingProcess": {
+      "title": "Working Process",
+      "processes": [
+        { "number": "01.", "title": "SURVEY/SITE VISIT", "description": "Before designing a project, PT. Multi Tritama Persada guarantee accuracy in the making, thus each project will be carefully reviewed in detail." },
+        { "number": "02.", "title": "CONSULTATION", "description": "In order to fulfill client's needs, PT. Multi Tritama Persada teams will do a regular consultation to know clients preferences and needs." },
+        { "number": "03.", "title": "PLANNING, MODELING, AND SHOP DRAWING", "description": "This is where the needs turn into a design and detailed concept, including budgeting, timeline, manpower, and material." },
+        { "number": "04.", "title": "FINAL CHECK AND HANDOVER", "description": "PT. Multi Tritama Persadawill ensure that all the items and works planned has been carried out well and customer satisfaction is achieved before handing over." },
+        { "number": "05.", "title": "PRODUCTION, EXECUTION, & SUPERVISION", "description": "PT. Multi Tritama Persada handles all aspects of procurement service and design and build starting from Civil works, MEP, Fabrication, and IT." },
+        { "number": "06.", "title": "GUARANTEE", "description": "PT. Multi Tritama Persada provide a guarantee for the quality and results of our work. This is to create a sense of comfort and trust from clients in us." }
+      ]
+    },
+    "about": {
+      "subtitle": "COMMERCIAL CONTRACTOR & DESIGNER INDONESIA",
+      "title": "About Us",
+      "description": "We are a professional exhibition and interior design company with years of experience.",
+      "whyUsTitle": "Why Choose Us?",
+      "whyUs": [
+        "Premium Quality Materials",
+        "Full Support & Consultation",
+        "Fast & Precise Execution",
+        "24/7 Customer Service",
+        "Affordable Pricing"
+      ],
+      "countries": "We have served clients across Indonesia, Singapore, and Malaysia.",
+      "buttonText": "Download Company Profile",
+      "image": "/images/section1.png"
+    },
+    "popUpStore": {
+      "title": "Pop Up Store Solutions",
+      "description": "Transform your brand vision into reality with our innovative pop-up store designs. We create engaging, temporary retail spaces that capture attention and drive customer engagement."
+    },
+    "contactForm": {
+      "title": "Aesthetic Designs",
+      "description1": "We provide comprehensive exhibition and interior design services.",
+      "description2": "Our team is ready to help realize your design vision.",
+      "services": [
+        { "title": "Whole Exhibition", "description": "Complete exhibition design and build services", "image": "/images/service1.png" },
+        { "title": "Visual Merchandising", "description": "Strategic product display and store layout", "image": "/images/service2.png" },
+        { "title": "Commercial", "description": "Commercial space design and construction", "image": "/images/service3.png" }
+      ]
+    },
+    "portfolio": {
+      "title": "Our Portfolio",
+      "description": "Explore our latest projects and design works"
+    },
+    "instagram": {
+      "title": "Our Instagram",
+      "description": "Follow us on Instagram for latest updates",
+      "username": "@savedecor_id",
+      "url": "https://www.instagram.com/savedecor_id/",
+      "posts": [
+        { "image": "/images/section1.png", "likes": "245", "comments": "12" },
+        { "image": "/images/section2.png", "likes": "189", "comments": "8" },
+        { "image": "/images/section3.png", "likes": "321", "comments": "15" },
+        { "image": "/images/service1.png", "likes": "156", "comments": "6" },
+        { "image": "/images/service2.png", "likes": "278", "comments": "11" },
+        { "image": "/images/service3.png", "likes": "203", "comments": "9" }
+      ]
+    },
+    "onlineOrder": {
+      "title": "Online Order",
+      "description": "Order our services online easily and quickly"
+    },
+    "consultation": {
+      "subtitle": "Stay In Touch",
+      "title": "Free Consultation",
+      "buttonText": "Chat Now",
+      "whatsappNumber": "6281234567890",
+      "whatsappMessage": "Halo, saya tertarik dengan layanan Save Decor"
+    },
+    "footer": {
+      "companyName": "PT. Multi Tritama Persada",
+      "description": "Professional exhibition and interior design company",
+      "address": "Jl. Peta Selatan GG. Hj. Syair No. 90, Kalideres, Jakarta Barat, 11841, Indonesia",
+      "instagram": "https://www.instagram.com/savedecor_id/",
+      "quickLinks": [
+        { "label": "Commercial", "href": "#" },
+        { "label": "Portfolio", "href": "#portfolio" },
+        { "label": "Services", "href": "#services" },
+        { "label": "About Us", "href": "#about" },
+        { "label": "Contact", "href": "#contact" }
+      ],
+      "copyright": "© 2025 PT. Multi Tritama Persada. All rights reserved."
+    },
+    "whatsappButton": {
+      "phoneNumber": "6281234567890",
+      "message": "Halo, saya tertarik dengan layanan Save Decor",
+      "buttonText": "Chat Now"
+    }
+  },
+  "sections": [
+    {
+      "id": "header",
+      "name": "Header",
+      "visible": true,
+      "order": 0
+    },
+    {
+      "id": "hero",
+      "name": "Hero",
+      "visible": true,
+      "order": 1
+    },
+    {
+      "id": "services",
+      "name": "Services",
+      "visible": true,
+      "order": 2
+    },
+    {
+      "id": "workingProcess",
+      "name": "Working Process",
+      "visible": true,
+      "order": 3
+    },
+    {
+      "id": "about",
+      "name": "About",
+      "visible": true,
+      "order": 4
+    },
+    {
+      "id": "popUpStore",
+      "name": "Pop Up Store",
+      "visible": true,
+      "order": 5
+    },
+    {
+      "id": "visionMission",
+      "name": "Vision & Mission",
+      "visible": true,
+      "order": 6
+    },
+    {
+      "id": "team",
+      "name": "Team",
+      "visible": true,
+      "order": 7
+    },
+    {
+      "id": "contactForm",
+      "name": "Contact Form",
+      "visible": true,
+      "order": 8
+    },
+    {
+      "id": "ourServices",
+      "name": "Our Services",
+      "visible": true,
+      "order": 9
+    },
+    {
+      "id": "portfolio",
+      "name": "Portfolio",
+      "visible": true,
+      "order": 10
+    },
+    {
+      "id": "instagram",
+      "name": "Instagram",
+      "visible": true,
+      "order": 11
+    },
+    {
+      "id": "onlineOrder",
+      "name": "Online Order",
+      "visible": true,
+      "order": 12
+    },
+    {
+      "id": "consultation",
+      "name": "Consultation",
+      "visible": true,
+      "order": 13
+    },
+    {
+      "id": "footer",
+      "name": "Footer",
+      "visible": true,
+      "order": 14
+    },
+    {
+      "id": "whatsappButton",
+      "name": "WhatsApp Button",
+      "visible": true,
+      "order": 15
+    }
+  ],
+  "menus": [
+    {
+      "id": "home",
+      "label": "Home",
+      "href": "#home",
+      "visible": true,
+      "order": 1
+    },
+    {
+      "id": "services",
+      "label": "Services",
+      "href": "#services",
+      "visible": true,
+      "order": 2
+    },
+    {
+      "id": "portfolio",
+      "label": "Portfolio",
+      "href": "#portfolio",
+      "visible": true,
+      "order": 3
+    },
+    {
+      "id": "contact",
+      "label": "Contact",
+      "href": "#contact",
+      "visible": true,
+      "order": 4
+    },
+    {
+      "id": "order",
+      "label": "Online Order",
+      "href": "#order",
+      "visible": true,
+      "order": 5
+    }
+  ]
+}

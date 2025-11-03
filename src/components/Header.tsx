@@ -1,8 +1,17 @@
 'use client';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useState, useEffect } from 'react';
 
 export default function Header() {
   const { language, setLanguage, t } = useLanguage();
+  const [menus, setMenus] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetch('http://localhost:8700/api/menus')
+      .then(res => res.json())
+      .then(data => setMenus(data.menus.filter((m: any) => m.visible).sort((a: any, b: any) => a.order - b.order)))
+      .catch(() => {});
+  }, []);
 
   return (
     <header className="bg-black sticky top-0 z-50">
@@ -13,21 +22,11 @@ export default function Header() {
           </div>
           
           <nav className="flex items-center space-x-8">
-            <a href="#home" className="text-white hover:text-gray-300 text-sm font-medium">
-              {t('home')}
-            </a>
-            <a href="#services" className="text-white hover:text-gray-300 text-sm font-medium">
-              {t('services')}
-            </a>
-            <a href="#portfolio" className="text-white hover:text-gray-300 text-sm font-medium">
-              {t('portfolio')}
-            </a>
-            <a href="#contact" className="text-white hover:text-gray-300 text-sm font-medium">
-              {t('contactUs')}
-            </a>
-            <a href="#order" className="text-white hover:text-gray-300 text-sm font-medium">
-              {t('onlineOrder')}
-            </a>
+            {menus.map(menu => (
+              <a key={menu.id} href={menu.href} className="text-white hover:text-gray-300 text-sm font-medium">
+                {t(menu.id)}
+              </a>
+            ))}
             <button
               onClick={() => setLanguage(language === 'en' ? 'id' : 'en')}
               className="text-white hover:text-gray-300 text-sm font-medium px-3 py-1 border border-white rounded"
