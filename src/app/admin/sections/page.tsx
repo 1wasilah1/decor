@@ -9,7 +9,7 @@ export default function SectionSettingsPage() {
   const router = useRouter();
   const [token, setToken] = useState('');
   const [activeSection, setActiveSection] = useState('hero');
-  const [settings, setSettings] = useState<Record<string, string | string[] | object[]>>({});
+  const [settings, setSettings] = useState<Record<string, unknown>>({});
 
   const loadSettings = async (section: string) => {
     try {
@@ -36,7 +36,7 @@ export default function SectionSettingsPage() {
     loadSettings(section);
   };
 
-  const handleChange = (field: string, value: string | string[] | object[]) => {
+  const handleChange = (field: string, value: unknown) => {
     setSettings({ ...settings, [field]: value });
   };
 
