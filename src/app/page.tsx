@@ -18,7 +18,7 @@ import Consultation from '@/components/Consultation';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 
-const components: any = {
+const components: Record<string, React.ComponentType> = {
   header: Header,
   hero: Hero,
   services: Services,
@@ -41,9 +41,9 @@ export default function Home() {
   const [sections, setSections] = useState<any[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:8700/api/sections-public')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8700/api'}/sections-public`)
       .then(res => res.json())
-      .then(data => setSections(data.sections.filter((s: any) => s.visible).sort((a: any, b: any) => a.order - b.order)))
+      .then(data => setSections(data.sections.filter((s: {visible: boolean}) => s.visible).sort((a: {order: number}, b: {order: number}) => a.order - b.order)))
       .catch(() => {});
   }, []);
 

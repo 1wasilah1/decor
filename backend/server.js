@@ -6,7 +6,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const app = express();
-const PORT = 8700;
+const PORT = process.env.PORT || 8700;
 const DATA_FILE = path.join(__dirname, 'data.json');
 
 app.use(cors());

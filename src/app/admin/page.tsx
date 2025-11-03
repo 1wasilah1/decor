@@ -2,14 +2,14 @@
 
 import { useState, useEffect } from 'react';
 
-const API_URL = 'http://localhost:8700/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8700/api';
 
 export default function AdminPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [sections, setSections] = useState<any[]>([]);
-  const [menus, setMenus] = useState<any[]>([]);
+  const [sections, setSections] = useState<{id: string; name: string; visible: boolean; order: number}[]>([]);
+  const [menus, setMenus] = useState<{id: string; label: string; href: string; visible: boolean; order: number}[]>([]);
   const [token, setToken] = useState('');
   const [activeTab, setActiveTab] = useState<'sections' | 'menus'>('sections');
 
@@ -23,9 +23,26 @@ export default function AdminPage() {
     }
   }, []);
 
+  const loadSections = async () => {
+    try {
+      const res = await fetch(`${API_URL}/sections`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setSections(data.sections.sort((a: {order: number}, b: {order: number}) => a.order - b.order));
+        setMenus(data.menus.sort((a: {order: number}, b: {order: number}) => a.order - b.order));
+      } else {
+        logout();
+      }
+    } catch {
+      alert('Gagal memuat data');
+    }
+  };
+
   useEffect(() => {
     if (isLoggedIn) loadSections();
-  }, [isLoggedIn]);
+  }, [isLoggedIn, token]);
 
   const login = async () => {
     try {
@@ -43,7 +60,7 @@ export default function AdminPage() {
       } else {
         alert('Username atau password salah!');
       }
-    } catch (error) {
+    } catch {
       alert('Gagal login');
     }
   };
@@ -54,22 +71,7 @@ export default function AdminPage() {
     setIsLoggedIn(false);
   };
 
-  const loadSections = async () => {
-    try {
-      const res = await fetch(`${API_URL}/sections`, {
-        headers: { 'Authorization': `Bearer ${token}` }
-      });
-      if (res.ok) {
-        const data = await res.json();
-        setSections(data.sections.sort((a: any, b: any) => a.order - b.order));
-        setMenus(data.menus.sort((a: any, b: any) => a.order - b.order));
-      } else {
-        logout();
-      }
-    } catch (error) {
-      alert('Gagal memuat data');
-    }
-  };
+
 
   const toggleVisible = (index: number) => {
     if (activeTab === 'sections') {
@@ -111,7 +113,7 @@ export default function AdminPage() {
       } else {
         logout();
       }
-    } catch (error) {
+    } catch {
       alert('Gagal menyimpan');
     }
   };

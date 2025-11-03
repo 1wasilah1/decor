@@ -3,13 +3,23 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-const API_URL = 'http://localhost:8700/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8700/api';
 
 export default function SectionSettingsPage() {
   const router = useRouter();
   const [token, setToken] = useState('');
   const [activeSection, setActiveSection] = useState('hero');
-  const [settings, setSettings] = useState<any>({});
+  const [settings, setSettings] = useState<Record<string, string | string[] | object[]>>({});
+
+  const loadSettings = async (section: string) => {
+    try {
+      const res = await fetch(`${API_URL}/section-settings/${section}`);
+      const data = await res.json();
+      setSettings(data);
+    } catch {
+      console.error('Failed to load settings');
+    }
+  };
 
   useEffect(() => {
     const savedToken = localStorage.getItem('authToken');
@@ -19,24 +29,14 @@ export default function SectionSettingsPage() {
     }
     setToken(savedToken);
     loadSettings('hero');
-  }, []);
-
-  const loadSettings = async (section: string) => {
-    try {
-      const res = await fetch(`${API_URL}/section-settings/${section}`);
-      const data = await res.json();
-      setSettings(data);
-    } catch (error) {
-      console.error('Failed to load settings');
-    }
-  };
+  }, [router]);
 
   const handleSectionChange = (section: string) => {
     setActiveSection(section);
     loadSettings(section);
   };
 
-  const handleChange = (field: string, value: any) => {
+  const handleChange = (field: string, value: string | string[] | object[]) => {
     setSettings({ ...settings, [field]: value });
   };
 
@@ -70,7 +70,7 @@ export default function SectionSettingsPage() {
       if (res.ok) {
         alert('Settings saved!');
       }
-    } catch (error) {
+    } catch {
       alert('Failed to save');
     }
   };

@@ -4,12 +4,12 @@ import { useState, useEffect } from 'react';
 
 export default function Header() {
   const { language, setLanguage, t } = useLanguage();
-  const [menus, setMenus] = useState<any[]>([]);
+  const [menus, setMenus] = useState<{id: string; href: string; visible: boolean; order: number}[]>([]);
 
   useEffect(() => {
-    fetch('http://localhost:8700/api/menus')
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8700/api'}/menus`)
       .then(res => res.json())
-      .then(data => setMenus(data.menus.filter((m: any) => m.visible).sort((a: any, b: any) => a.order - b.order)))
+      .then(data => setMenus(data.menus.filter((m: {visible: boolean}) => m.visible).sort((a: {order: number}, b: {order: number}) => a.order - b.order)))
       .catch(() => {});
   }, []);
 
