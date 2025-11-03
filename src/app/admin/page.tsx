@@ -166,7 +166,7 @@ export default function AdminPage() {
         <div className="space-y-3 mb-6">
           {(activeTab === 'sections' ? sections : menus).map((section, index) => (
             <div key={section.id} className="flex items-center justify-between p-4 bg-gray-50 rounded border">
-              <div className="font-semibold text-black">{section.name || section.label}</div>
+              <div className="font-semibold text-black">{'name' in section ? section.name : section.label}</div>
               <div className="flex items-center gap-4">
                 <input
                   type="number"
