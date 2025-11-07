@@ -28,7 +28,7 @@ export default function Services() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 items-center justify-items-center">
-          {brands.map((brand, index) => (
+          {brands.map((brand: string, index: number) => (
             <div key={index} className="flex items-center justify-center h-16 w-32">
               <span className="text-gray-700 font-medium text-sm md:text-base text-center">
                 {brand}
