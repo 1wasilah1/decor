@@ -1,9 +1,18 @@
 {
   "sectionSettings": {
     "hero": {
-      "title": "Designer and Contractor for Exhibitions and Interior",
-      "subtitle": "Built with Precision, Color, and Speed",
-      "buttonText": "Discover Now",
+      "title": {
+        "en": "Designer and Contractor for Exhibitions and Interior",
+        "id": "Desainer dan Kontraktor untuk Pameran dan Interior"
+      },
+      "subtitle": {
+        "en": "Built with Precision, Color, and Speed",
+        "id": "Dibangun dengan Presisi, Warna, dan Kecepatan"
+      },
+      "buttonText": {
+        "en": "Discover Now",
+        "id": "Temukan Sekarang"
+      },
       "image": "/images/hero-image.png"
     },
     "services": {

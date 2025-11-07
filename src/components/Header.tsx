@@ -13,15 +13,18 @@ export default function Header() {
       .catch(() => {});
   }, []);
 
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   return (
     <header className="bg-black sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <div className="text-white font-bold text-sm">
+          <div className="text-white font-bold text-xs sm:text-sm">
             PT. Multi Tritama Persada
           </div>
           
-          <nav className="flex items-center space-x-8">
+          {/* Desktop Menu */}
+          <nav className="hidden md:flex items-center space-x-4 lg:space-x-8">
             {menus.map(menu => (
               <a key={menu.id} href={menu.href} className="text-white hover:text-gray-300 text-sm font-medium">
                 {t(menu.id)}
@@ -39,7 +42,35 @@ export default function Header() {
               </svg>
             </a>
           </nav>
+
+          {/* Mobile Menu Button */}
+          <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="md:hidden text-white">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              {mobileMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              )}
+            </svg>
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="md:hidden pb-4">
+            {menus.map(menu => (
+              <a key={menu.id} href={menu.href} className="block text-white hover:text-gray-300 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
+                {t(menu.id)}
+              </a>
+            ))}
+            <button
+              onClick={() => { setLanguage(language === 'en' ? 'id' : 'en'); setMobileMenuOpen(false); }}
+              className="text-white hover:text-gray-300 text-sm font-medium px-3 py-2 border border-white rounded mt-2"
+            >
+              {language === 'en' ? 'ID' : 'EN'}
+            </button>
+          </div>
+        )}
       </div>
     </header>
   );
