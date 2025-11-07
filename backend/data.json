@@ -1,13 +1,13 @@
 {
   "sectionSettings": {
     "hero": {
-      "title": "Exhibition Design Excellence",
-      "subtitle": "Creating Memorable Brand Experiences Through Innovative Design",
+      "title": "Designer and Contractor for Exhibitions and Interior",
+      "subtitle": "Built with Precision, Color, and Speed",
       "buttonText": "Discover Now",
       "image": "/images/hero-image.png"
     },
     "services": {
-      "title": "Trusted by Leading Brands",
+      "title": "Our Client",
       "description": "We have worked with various leading brands to create exceptional exhibition experiences",
       "brands": ["injourney", "UNIQLO", "VERSACE", "DIOR", "LANCÔME", "SOMETHINC", "sociolla", "SKINTIFIC", "ARTISAN", "smeg", "SKIN1004", "harlette", "HINT", "azarine", "kojie.san", "barenbliss", "buttonscarves", "Y.O.U", "beauty haul", "JUDYDOLL", "Good Day", "PASSION", "bridestory", "CHAGEE", "kibo"]
     },

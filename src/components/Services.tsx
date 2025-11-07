@@ -1,26 +1,29 @@
 'use client';
 import { useLanguage } from '@/contexts/LanguageContext';
-
-const brands = [
-  "injourney", "UNIQLO", "VERSACE", "DIOR", "LANCÔME",
-  "SOMETHINC", "sociolla", "SKINTIFIC", "ARTISAN", "smeg",
-  "SKIN1004", "harlette", "HINT", "azarine", "kojie.san",
-  "barenbliss", "buttonscarves", "Y.O.U", "beauty haul", "JUDYDOLL",
-  "Good Day", "PASSION", "bridestory", "CHAGEE", "kibo"
-];
+import { useState, useEffect } from 'react';
 
 export default function Services() {
   const { t } = useLanguage();
+  const [settings, setSettings] = useState<any>(null);
+
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8700/api'}/section-settings/services`)
+      .then(res => res.json())
+      .then(data => setSettings(data))
+      .catch(() => {});
+  }, []);
+
+  const brands = settings?.brands || [];
 
   return (
     <section id="jasa" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4 font-display">
-            {t('trustedBrands')}
+            {settings?.title || t('trustedBrands')}
           </h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto font-sans">
-            {t('trustedBrandsDesc')}
+            {settings?.description || t('trustedBrandsDesc')}
           </p>
         </div>
 
