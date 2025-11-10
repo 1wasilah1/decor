@@ -5,7 +5,7 @@ export default function VisionMission() {
   const { t } = useLanguage();
 
   return (
-    <section className="py-20 bg-slate-900 text-white relative overflow-hidden">
+    <section id="vision-mission" className="py-20 bg-slate-900 text-white relative overflow-hidden">
       <div className="absolute inset-0 opacity-20">
         <svg className="absolute bottom-0 w-full h-64" viewBox="0 0 1440 320" preserveAspectRatio="none">
           <path fill="none" stroke="url(#gradient)" strokeWidth="1" d="M0,160 Q360,100 720,160 T1440,160" opacity="0.3"/>

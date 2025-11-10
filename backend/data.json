@@ -224,25 +224,32 @@
       "order": 2
     },
     {
+      "id": "aboutUs",
+      "label": "About Us",
+      "href": "#about",
+      "visible": true,
+      "order": 3
+    },
+    {
       "id": "portfolio",
       "label": "Portfolio",
       "href": "#portfolio",
       "visible": true,
-      "order": 3
+      "order": 4
     },
     {
       "id": "contact",
       "label": "Contact",
       "href": "#contact",
       "visible": true,
-      "order": 4
+      "order": 5
     },
     {
       "id": "order",
       "label": "Online Order",
       "href": "#order",
       "visible": true,
-      "order": 5
+      "order": 6
     }
   ]
 }

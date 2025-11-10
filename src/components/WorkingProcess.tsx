@@ -38,7 +38,7 @@ export default function WorkingProcess() {
   const { t } = useLanguage();
 
   return (
-    <section className="py-20 bg-gray-100 relative overflow-hidden">
+    <section id="working-process" className="py-20 bg-gray-100 relative overflow-hidden">
       <div className="absolute right-0 top-0 w-1/2 h-full opacity-30">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-200 via-purple-200 to-pink-200" style={{
           backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,255,255,.5) 2px, rgba(255,255,255,.5) 4px)',

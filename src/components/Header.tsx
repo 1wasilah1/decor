@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react';
 export default function Header() {
   const { language, setLanguage, t } = useLanguage();
   const [menus, setMenus] = useState<{id: string; href: string; visible: boolean; order: number}[]>([]);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8700/api'}/menus`)
@@ -12,8 +14,6 @@ export default function Header() {
       .then(data => setMenus(data.menus.filter((m: {visible: boolean}) => m.visible).sort((a: {order: number}, b: {order: number}) => a.order - b.order)))
       .catch(() => {});
   }, []);
-
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
     <header className="bg-black sticky top-0 z-50">
@@ -24,12 +24,30 @@ export default function Header() {
           </div>
           
           {/* Desktop Menu */}
-          <nav className="hidden md:flex items-center space-x-4 lg:space-x-8">
-            {menus.map(menu => (
-              <a key={menu.id} href={menu.href} className="text-white hover:text-gray-300 text-sm font-medium">
-                {t(menu.id)}
-              </a>
-            ))}
+          <nav className="hidden md:flex items-center space-x-2 lg:space-x-6 xl:space-x-8">
+            {menus.map(menu => {
+              if (menu.id === 'aboutUs') {
+                return (
+                  <div key={menu.id} className="relative" onMouseEnter={() => setAboutDropdownOpen(true)} onMouseLeave={() => setAboutDropdownOpen(false)}>
+                    <a href={menu.href} className="text-white hover:text-gray-300 text-xs lg:text-sm font-medium whitespace-nowrap">
+                      {t(menu.id)}
+                    </a>
+                    {aboutDropdownOpen && (
+                      <div className="absolute top-full left-0 mt-2 bg-black border border-gray-700 rounded shadow-lg py-2 min-w-[200px] z-50">
+                        <a href="#vision-mission" className="block px-4 py-2 text-white hover:bg-gray-800 text-sm whitespace-nowrap">Vision And Mission</a>
+                        <a href="#team" className="block px-4 py-2 text-white hover:bg-gray-800 text-sm whitespace-nowrap">Meet The Team</a>
+                        <a href="#working-process" className="block px-4 py-2 text-white hover:bg-gray-800 text-sm whitespace-nowrap">Working Process</a>
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+              return (
+                <a key={menu.id} href={menu.href} className="text-white hover:text-gray-300 text-xs lg:text-sm font-medium whitespace-nowrap">
+                  {t(menu.id)}
+                </a>
+              );
+            })}
             <button
               onClick={() => setLanguage(language === 'en' ? 'id' : 'en')}
               className="text-white hover:text-gray-300 text-sm font-medium px-3 py-1 border border-white rounded"
@@ -58,11 +76,27 @@ export default function Header() {
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="md:hidden pb-4">
-            {menus.map(menu => (
-              <a key={menu.id} href={menu.href} className="block text-white hover:text-gray-300 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
-                {t(menu.id)}
-              </a>
-            ))}
+            {menus.map(menu => {
+              if (menu.id === 'aboutUs') {
+                return (
+                  <div key={menu.id}>
+                    <a href={menu.href} className="block text-white hover:text-gray-300 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
+                      {t(menu.id)}
+                    </a>
+                    <div className="pl-4">
+                      <a href="#vision-mission" className="block text-gray-300 hover:text-white py-1 text-xs" onClick={() => setMobileMenuOpen(false)}>Vision And Mission</a>
+                      <a href="#team" className="block text-gray-300 hover:text-white py-1 text-xs" onClick={() => setMobileMenuOpen(false)}>Meet The Team</a>
+                      <a href="#working-process" className="block text-gray-300 hover:text-white py-1 text-xs" onClick={() => setMobileMenuOpen(false)}>Working Process</a>
+                    </div>
+                  </div>
+                );
+              }
+              return (
+                <a key={menu.id} href={menu.href} className="block text-white hover:text-gray-300 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
+                  {t(menu.id)}
+                </a>
+              );
+            })}
             <button
               onClick={() => { setLanguage(language === 'en' ? 'id' : 'en'); setMobileMenuOpen(false); }}
               className="text-white hover:text-gray-300 text-sm font-medium px-3 py-2 border border-white rounded mt-2"
