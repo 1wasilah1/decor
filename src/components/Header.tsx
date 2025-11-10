@@ -6,7 +6,6 @@ export default function Header() {
   const { language, setLanguage, t } = useLanguage();
   const [menus, setMenus] = useState<{id: string; href: string; visible: boolean; order: number}[]>([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [aboutDropdownOpen, setAboutDropdownOpen] = useState(false);
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8700/api'}/menus`)
@@ -28,17 +27,17 @@ export default function Header() {
             {menus.map(menu => {
               if (menu.id === 'aboutUs') {
                 return (
-                  <div key={menu.id} className="relative" onMouseEnter={() => setAboutDropdownOpen(true)} onMouseLeave={() => setAboutDropdownOpen(false)}>
+                  <div key={menu.id} className="relative group">
                     <a href={menu.href} className="text-white hover:text-gray-300 text-xs lg:text-sm font-medium whitespace-nowrap">
                       {t(menu.id)}
                     </a>
-                    {aboutDropdownOpen && (
-                      <div className="absolute top-full left-0 mt-2 bg-black border border-gray-700 rounded shadow-lg py-2 min-w-[200px] z-50">
+                    <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                      <div className="bg-black border border-gray-700 rounded shadow-lg py-2 min-w-[200px]">
                         <a href="#vision-mission" className="block px-4 py-2 text-white hover:bg-gray-800 text-sm whitespace-nowrap">Vision And Mission</a>
                         <a href="#team" className="block px-4 py-2 text-white hover:bg-gray-800 text-sm whitespace-nowrap">Meet The Team</a>
                         <a href="#working-process" className="block px-4 py-2 text-white hover:bg-gray-800 text-sm whitespace-nowrap">Working Process</a>
                       </div>
-                    )}
+                    </div>
                   </div>
                 );
               }

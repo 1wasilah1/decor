@@ -210,16 +210,16 @@
   ],
   "menus": [
     {
-      "id": "home",
-      "label": "Home",
-      "href": "#home",
+      "id": "popUpStore",
+      "label": "Pop Up Store",
+      "href": "#popup",
       "visible": true,
       "order": 1
     },
     {
-      "id": "services",
-      "label": "Services",
-      "href": "#services",
+      "id": "ourServices",
+      "label": "Our Services",
+      "href": "#our-services",
       "visible": true,
       "order": 2
     },
@@ -231,25 +231,39 @@
       "order": 3
     },
     {
-      "id": "portfolio",
-      "label": "Portfolio",
-      "href": "#portfolio",
+      "id": "ourClient",
+      "label": "Our Client",
+      "href": "#services",
       "visible": true,
       "order": 4
     },
     {
-      "id": "contact",
-      "label": "Contact",
-      "href": "#contact",
+      "id": "portfolio",
+      "label": "Portfolio",
+      "href": "#portfolio",
       "visible": true,
       "order": 5
     },
     {
-      "id": "order",
+      "id": "instagram",
+      "label": "Instagram",
+      "href": "#instagram",
+      "visible": true,
+      "order": 6
+    },
+    {
+      "id": "onlineOrder",
       "label": "Online Order",
       "href": "#order",
       "visible": true,
-      "order": 6
+      "order": 7
+    },
+    {
+      "id": "consultation",
+      "label": "Claim Your Free Design Now",
+      "href": "#contact",
+      "visible": true,
+      "order": 8
     }
   ]
 }
