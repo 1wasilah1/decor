@@ -124,62 +124,62 @@
       "order": 1
     },
     {
-      "id": "popUpStore",
-      "name": "Pop Up Store",
-      "visible": true,
-      "order": 2
-    },
-    {
       "id": "ourServices",
       "name": "Our Services",
       "visible": true,
-      "order": 3
+      "order": 2
     },
     {
       "id": "about",
       "name": "About",
       "visible": true,
-      "order": 4
+      "order": 3
     },
     {
       "id": "visionMission",
       "name": "Vision & Mission",
       "visible": true,
-      "order": 5
+      "order": 4
     },
     {
       "id": "team",
       "name": "Team",
       "visible": true,
-      "order": 6
+      "order": 5
     },
     {
       "id": "workingProcess",
       "name": "Working Process",
       "visible": true,
-      "order": 7
+      "order": 6
     },
     {
       "id": "services",
       "name": "Our Client",
       "visible": true,
-      "order": 8
+      "order": 7
     },
     {
       "id": "portfolio",
       "name": "Portfolio",
       "visible": true,
-      "order": 9
+      "order": 8
     },
     {
       "id": "instagram",
       "name": "Instagram",
       "visible": true,
-      "order": 10
+      "order": 9
     },
     {
       "id": "onlineOrder",
       "name": "Online Order",
+      "visible": true,
+      "order": 10
+    },
+    {
+      "id": "popUpStore",
+      "name": "Pop Up Store",
       "visible": true,
       "order": 11
     },
