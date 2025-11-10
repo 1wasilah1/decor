@@ -95,10 +95,13 @@ export default function Portfolio() {
                 {portfolioData[activeTab].images.map((image, imageIndex) => (
                   <div 
                     key={imageIndex} 
-                    className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer"
+                    className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer bg-gray-200"
                     onClick={() => openModal(image, imageIndex)}
                   >
                     <div className="relative h-64">
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-400"></div>
+                      </div>
                       <Image
                         src={image}
                         alt={`${portfolioData[activeTab].folder} ${imageIndex + 1}`}
@@ -145,12 +148,15 @@ export default function Portfolio() {
             </button>
 
             <div className="relative max-w-7xl max-h-[90vh] w-full h-full" onClick={(e) => e.stopPropagation()}>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-white"></div>
+              </div>
               <Image
                 src={selectedImage}
                 alt="Portfolio"
                 fill
                 className="object-contain"
-                quality={100}
+                quality={60}
                 priority
               />
             </div>
