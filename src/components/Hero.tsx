@@ -15,35 +15,29 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="home" className="relative h-screen flex items-center justify-center text-center text-white">
-      <div className="absolute inset-0">
-        {settings?.videoUrl ? (
-          <video
-            key={settings.videoUrl}
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            className="w-full h-full object-cover"
-            onLoadedData={(e) => e.currentTarget.play()}
-          >
-            <source src={settings.videoUrl} type="video/quicktime" />
-            <source src={settings.videoUrl} type="video/mp4" />
-          </video>
-        ) : (
-          <Image
-            src={settings?.image || "/images/hero-image.png"}
-            alt="Exhibition Design"
-            fill
-            className="object-cover"
-            priority
-            unoptimized
-          />
-        )}
-        <div className="absolute inset-0 bg-black bg-opacity-40" />
-      </div>
-      
+    <section id="home" className="relative h-screen flex items-center justify-center text-center text-white overflow-hidden">
+      {settings?.videoUrl ? (
+        <video
+          key={settings.videoUrl}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src={settings.videoUrl} type="video/mp4" />
+        </video>
+      ) : (
+        <Image
+          src={settings?.image || "/images/hero-image.png"}
+          alt="Exhibition Design"
+          fill
+          className="object-cover"
+          priority
+          unoptimized
+        />
+      )}
+      <div className="absolute inset-0 bg-black bg-opacity-40" />
       <div className="relative z-10 max-w-4xl mx-auto px-4">
         <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
           {settings?.title?.[language] || settings?.title || t('heroTitle')}
