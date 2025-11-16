@@ -19,13 +19,17 @@ export default function Hero() {
       <div className="absolute inset-0">
         {settings?.videoUrl ? (
           <video
+            key={settings.videoUrl}
             autoPlay
             loop
             muted
             playsInline
+            preload="auto"
             className="w-full h-full object-cover"
+            onLoadedData={(e) => e.currentTarget.play()}
           >
-            <source src={settings.videoUrl} />
+            <source src={settings.videoUrl} type="video/quicktime" />
+            <source src={settings.videoUrl} type="video/mp4" />
           </video>
         ) : (
           <Image

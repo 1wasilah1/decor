@@ -39,6 +39,24 @@ export default function Team() {
             Our dedicated team of professionals
           </p>
         </div>
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {team.map((member, index) => (
+            <div key={index} className="text-center">
+              <div className="relative w-48 h-48 mx-auto mb-4 rounded-full overflow-hidden bg-gray-200">
+                <Image
+                  src={member.image}
+                  alt={member.name}
+                  fill
+                  className="object-cover"
+                  unoptimized
+                />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-1">{member.name}</h3>
+              <p className="text-gray-600">{member.position}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
