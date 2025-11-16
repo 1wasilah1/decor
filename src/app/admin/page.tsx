@@ -11,7 +11,9 @@ export default function AdminPage() {
   const [sections, setSections] = useState<{id: string; name: string; visible: boolean; order: number}[]>([]);
   const [menus, setMenus] = useState<{id: string; label: string; href: string; visible: boolean; order: number}[]>([]);
   const [token, setToken] = useState('');
-  const [activeTab, setActiveTab] = useState<'sections' | 'menus'>('sections');
+  const [activeTab, setActiveTab] = useState<'sections' | 'menus' | 'logos'>('sections');
+  const [logos, setLogos] = useState<string[]>([]);
+  const [logosText, setLogosText] = useState('');
 
   const logout = () => {
     localStorage.removeItem('authToken');
@@ -36,6 +38,19 @@ export default function AdminPage() {
     }
   };
 
+  const loadLogos = async () => {
+    try {
+      const res = await fetch(`${API_URL}/client-logos`);
+      if (res.ok) {
+        const data = await res.json();
+        setLogos(data.logos || []);
+        setLogosText((data.logos || []).join('\n'));
+      }
+    } catch {
+      alert('Gagal memuat logo');
+    }
+  };
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const savedToken = localStorage.getItem('authToken');
@@ -47,7 +62,10 @@ export default function AdminPage() {
   }, []);
 
   useEffect(() => {
-    if (isLoggedIn && token) loadSections();
+    if (isLoggedIn && token) {
+      loadSections();
+      loadLogos();
+    }
   }, [isLoggedIn, token]);
 
   const login = async () => {
@@ -116,6 +134,28 @@ export default function AdminPage() {
     }
   };
 
+  const saveLogos = async () => {
+    try {
+      const logosList = logosText.split('\n').map(url => url.trim()).filter(url => url.length > 0);
+      const res = await fetch(`${API_URL}/client-logos`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ logos: logosList })
+      });
+      if (res.ok) {
+        alert('Logo berhasil disimpan!');
+        loadLogos();
+      } else {
+        logout();
+      }
+    } catch {
+      alert('Gagal menyimpan logo');
+    }
+  };
+
   if (!isLoggedIn) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -161,35 +201,58 @@ export default function AdminPage() {
           >
             Menu Navbar
           </button>
+          <button
+            onClick={() => setActiveTab('logos')}
+            className={`px-4 py-2 rounded ${activeTab === 'logos' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-black'}`}
+          >
+            Client Logos
+          </button>
         </div>
         
-        <div className="space-y-3 mb-6">
-          {(activeTab === 'sections' ? sections : menus).map((section, index) => (
-            <div key={section.id} className="flex items-center justify-between p-4 bg-gray-50 rounded border">
-              <div className="font-semibold text-black">{'name' in section ? section.name : section.label}</div>
-              <div className="flex items-center gap-4">
-                <input
-                  type="number"
-                  value={section.order}
-                  onChange={(e) => updateOrder(index, parseInt(e.target.value))}
-                  className="w-16 p-2 border rounded text-center text-black"
-                />
-                <button
-                  onClick={() => toggleVisible(index)}
-                  className={`w-12 h-6 rounded-full transition ${
-                    section.visible ? 'bg-green-500' : 'bg-gray-300'
-                  }`}
-                >
-                  <div className={`w-5 h-5 bg-white rounded-full transition transform ${
-                    section.visible ? 'translate-x-6' : 'translate-x-1'
-                  }`} />
-                </button>
+        {activeTab === 'logos' ? (
+          <div className="mb-6">
+            <p className="text-sm text-gray-600 mb-3">
+              Masukkan URL logo (satu per baris). Format: https://drive.google.com/thumbnail?id=FILE_ID&sz=w400
+            </p>
+            <textarea
+              value={logosText}
+              onChange={(e) => setLogosText(e.target.value)}
+              className="w-full h-64 p-3 border rounded font-mono text-sm text-black"
+              placeholder="https://drive.google.com/thumbnail?id=FILE_ID_1&sz=w400&#10;https://drive.google.com/thumbnail?id=FILE_ID_2&sz=w400"
+            />
+          </div>
+        ) : (
+          <div className="space-y-3 mb-6">
+            {(activeTab === 'sections' ? sections : menus).map((section, index) => (
+              <div key={section.id} className="flex items-center justify-between p-4 bg-gray-50 rounded border">
+                <div className="font-semibold text-black">{'name' in section ? section.name : section.label}</div>
+                <div className="flex items-center gap-4">
+                  <input
+                    type="number"
+                    value={section.order}
+                    onChange={(e) => updateOrder(index, parseInt(e.target.value))}
+                    className="w-16 p-2 border rounded text-center text-black"
+                  />
+                  <button
+                    onClick={() => toggleVisible(index)}
+                    className={`w-12 h-6 rounded-full transition ${
+                      section.visible ? 'bg-green-500' : 'bg-gray-300'
+                    }`}
+                  >
+                    <div className={`w-5 h-5 bg-white rounded-full transition transform ${
+                      section.visible ? 'translate-x-6' : 'translate-x-1'
+                    }`} />
+                  </button>
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
-        <button onClick={saveSections} className="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700 mb-3">
+        <button 
+          onClick={activeTab === 'logos' ? saveLogos : saveSections} 
+          className="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700 mb-3"
+        >
           Simpan Perubahan
         </button>
         <button onClick={() => window.location.href = '/admin/sections'} className="w-full bg-green-600 text-white p-3 rounded hover:bg-green-700 mb-3">

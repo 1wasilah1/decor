@@ -113,4 +113,26 @@ app.put('/api/sections/:id', authMiddleware, async (req, res) => {
   }
 });
 
+// Get client logos
+app.get('/api/client-logos', async (req, res) => {
+  try {
+    const data = JSON.parse(await fs.readFile(DATA_FILE, 'utf-8'));
+    res.json({ logos: data.clientLogos || [] });
+  } catch {
+    res.json({ logos: [] });
+  }
+});
+
+// Update client logos
+app.post('/api/client-logos', authMiddleware, async (req, res) => {
+  try {
+    const data = JSON.parse(await fs.readFile(DATA_FILE, 'utf-8'));
+    data.clientLogos = req.body.logos;
+    await fs.writeFile(DATA_FILE, JSON.stringify(data, null, 2));
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));

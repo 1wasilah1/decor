@@ -17,6 +17,7 @@ import OnlineOrder from '@/components/OnlineOrder';
 import Consultation from '@/components/Consultation';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
+import OurClient from '@/components/OurClient';
 
 const components: Record<string, React.ComponentType> = {
   header: Header,
@@ -33,6 +34,7 @@ const components: Record<string, React.ComponentType> = {
   instagram: Instagram,
   onlineOrder: OnlineOrder,
   consultation: Consultation,
+  ourClient: OurClient,
   footer: Footer,
   whatsappButton: WhatsAppButton
 };

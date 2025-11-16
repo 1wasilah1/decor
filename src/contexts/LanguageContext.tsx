@@ -67,7 +67,9 @@ const translations = {
     contact: 'Contact',
     allRights: '© 2024 Save Decor. All rights reserved.',
     privacyPolicy: 'Privacy Policy',
-    termsOfService: 'Terms of Service'
+    termsOfService: 'Terms of Service',
+    ourClient: 'Our Client',
+    clientDesc: 'Trusted by leading companies'
   },
   id: {
     home: 'Beranda',
@@ -126,7 +128,9 @@ const translations = {
     contact: 'Kontak',
     allRights: '© 2024 Save Decor. Hak cipta dilindungi.',
     privacyPolicy: 'Kebijakan Privasi',
-    termsOfService: 'Syarat Layanan'
+    termsOfService: 'Syarat Layanan',
+    ourClient: 'Klien Kami',
+    clientDesc: 'Dipercaya oleh perusahaan terkemuka'
   }
 };
 

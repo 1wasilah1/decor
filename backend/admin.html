@@ -36,9 +36,24 @@
   </div>
 
   <div id="adminContainer" class="admin-container hidden">
-    <h1>Section Settings</h1>
-    <div id="sectionsList"></div>
-    <button class="save-btn" onclick="saveSections()">Simpan Perubahan</button>
+    <div style="display: flex; gap: 10px; margin-bottom: 20px;">
+      <button onclick="showTab('sections')" id="sectionsTab" style="flex: 1; background: #0070f3;">Sections</button>
+      <button onclick="showTab('logos')" id="logosTab" style="flex: 1; background: #666;">Client Logos</button>
+    </div>
+    
+    <div id="sectionsContent">
+      <h1>Section Settings</h1>
+      <div id="sectionsList"></div>
+      <button class="save-btn" onclick="saveSections()">Simpan Perubahan</button>
+    </div>
+
+    <div id="logosContent" class="hidden">
+      <h1>Client Logos</h1>
+      <p style="color: #666; margin-bottom: 15px; font-size: 14px;">Masukkan URL logo (satu per baris). Format: https://drive.google.com/thumbnail?id=FILE_ID&sz=w400</p>
+      <textarea id="logosInput" style="width: 100%; height: 300px; padding: 10px; border: 1px solid #ddd; border-radius: 4px; font-family: monospace; font-size: 12px;"></textarea>
+      <button class="save-btn" onclick="saveLogos()">Simpan Logo</button>
+    </div>
+
     <button class="logout-btn" onclick="logout()">Logout</button>
   </div>
 
@@ -68,6 +83,21 @@
       document.getElementById('loginContainer').classList.add('hidden');
       document.getElementById('adminContainer').classList.remove('hidden');
       loadSections();
+      loadLogos();
+    }
+
+    function showTab(tab) {
+      if (tab === 'sections') {
+        document.getElementById('sectionsContent').classList.remove('hidden');
+        document.getElementById('logosContent').classList.add('hidden');
+        document.getElementById('sectionsTab').style.background = '#0070f3';
+        document.getElementById('logosTab').style.background = '#666';
+      } else {
+        document.getElementById('sectionsContent').classList.add('hidden');
+        document.getElementById('logosContent').classList.remove('hidden');
+        document.getElementById('sectionsTab').style.background = '#666';
+        document.getElementById('logosTab').style.background = '#0070f3';
+      }
     }
 
     async function loadSections() {
@@ -120,6 +150,39 @@
           loadSections();
         } else {
           alert('Gagal menyimpan perubahan');
+        }
+      } catch (error) {
+        alert('Error: ' + error.message);
+      }
+    }
+
+    async function loadLogos() {
+      try {
+        const res = await fetch(`${API_URL}/client-logos`);
+        const data = await res.json();
+        document.getElementById('logosInput').value = (data.logos || []).join('\n');
+      } catch (error) {
+        console.error('Gagal memuat logo:', error);
+      }
+    }
+
+    async function saveLogos() {
+      try {
+        const logos = document.getElementById('logosInput').value
+          .split('\n')
+          .map(url => url.trim())
+          .filter(url => url.length > 0);
+        
+        const res = await fetch(`${API_URL}/client-logos`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ logos })
+        });
+        
+        if (res.ok) {
+          alert('Logo berhasil disimpan!');
+        } else {
+          alert('Gagal menyimpan logo');
         }
       } catch (error) {
         alert('Error: ' + error.message);

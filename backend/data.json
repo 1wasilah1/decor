@@ -184,28 +184,34 @@
       "order": 11
     },
     {
+      "id": "ourClient",
+      "name": "Our Client",
+      "visible": true,
+      "order": 12
+    },
+    {
       "id": "consultation",
       "name": "Claim Your Free Design Now",
       "visible": true,
-      "order": 12
+      "order": 13
     },
     {
       "id": "contactForm",
       "name": "Contact Form",
       "visible": false,
-      "order": 13
+      "order": 14
     },
     {
       "id": "footer",
       "name": "Footer",
       "visible": true,
-      "order": 14
+      "order": 15
     },
     {
       "id": "whatsappButton",
       "name": "WhatsApp Button",
       "visible": true,
-      "order": 15
+      "order": 16
     }
   ],
   "menus": [
@@ -251,5 +257,9 @@
       "visible": true,
       "order": 6
     }
+  ],
+  "clientLogos": [
+    "https://drive.google.com/thumbnail?id=FILE_ID_1&sz=w400",
+    "https://drive.google.com/thumbnail?id=FILE_ID_2&sz=w400"
   ]
 }
