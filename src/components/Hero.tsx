@@ -14,8 +14,8 @@ export default function Hero() {
       .then(data => {
         setSettings(data);
         if (data.videoUrl) {
-          const fileId = data.videoUrl.match(/[-\w]{25,}/);
-          if (fileId) setVideoUrl(`https://drive.google.com/uc?export=download&id=${fileId[0]}`);
+          const match = data.videoUrl.match(/\/d\/([^\/]+)/);
+          if (match) setVideoUrl(match[1]);
         }
       })
       .catch(() => {});
@@ -25,15 +25,11 @@ export default function Hero() {
     <section id="home" className="relative h-screen flex items-center justify-center text-center text-white">
       <div className="absolute inset-0">
         {videoUrl ? (
-          <video
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="w-full h-full object-cover"
-          >
-            <source src={videoUrl} type="video/mp4" />
-          </video>
+          <iframe
+            src={`https://drive.google.com/file/d/${videoUrl}/preview?autoplay=1&loop=1&mute=1`}
+            className="w-full h-full object-cover pointer-events-none"
+            allow="autoplay"
+          />
         ) : (
           <Image
             src="/images/hero-image.png"
