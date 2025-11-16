@@ -10,15 +10,17 @@ export default function Hero() {
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8700/api'}/section-settings/hero`)
       .then(res => res.json())
-      .then(data => setSettings(data))
-      .catch(() => {});
+      .then(data => {
+        console.log('Hero settings:', data);
+        setSettings(data);
+      })
+      .catch(err => console.error('Failed to load hero settings:', err));
   }, []);
 
   return (
     <section id="home" className="relative h-screen flex items-center justify-center text-center text-white overflow-hidden">
       {settings?.videoUrl ? (
         <video
-          key={settings.videoUrl}
           autoPlay
           loop
           muted
