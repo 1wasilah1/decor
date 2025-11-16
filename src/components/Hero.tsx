@@ -6,33 +6,30 @@ import { useState, useEffect } from 'react';
 export default function Hero() {
   const { t, language } = useLanguage();
   const [settings, setSettings] = useState<any>(null);
-  const [videoUrl, setVideoUrl] = useState('');
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8700/api'}/section-settings/hero`)
       .then(res => res.json())
-      .then(data => {
-        setSettings(data);
-        if (data.videoUrl) {
-          const match = data.videoUrl.match(/\/d\/([^\/]+)/);
-          if (match) setVideoUrl(match[1]);
-        }
-      })
+      .then(data => setSettings(data))
       .catch(() => {});
   }, []);
 
   return (
     <section id="home" className="relative h-screen flex items-center justify-center text-center text-white">
       <div className="absolute inset-0">
-        {videoUrl ? (
-          <iframe
-            src={`https://drive.google.com/file/d/${videoUrl}/preview?autoplay=1&loop=1&mute=1`}
-            className="w-full h-full object-cover pointer-events-none"
-            allow="autoplay"
-          />
+        {settings?.videoUrl ? (
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="w-full h-full object-cover"
+          >
+            <source src={settings.videoUrl} />
+          </video>
         ) : (
           <Image
-            src="/images/hero-image.png"
+            src={settings?.image || "/images/hero-image.png"}
             alt="Exhibition Design"
             fill
             className="object-cover"

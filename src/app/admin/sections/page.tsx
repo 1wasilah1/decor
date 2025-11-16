@@ -150,15 +150,15 @@ export default function SectionSettingsPage() {
                 />
               </div>
               <div>
-                <label className="block text-black font-semibold mb-2">Video URL (Google Drive)</label>
+                <label className="block text-black font-semibold mb-2">Video URL</label>
                 <input
                   type="text"
                   value={getStringValue('videoUrl')}
                   onChange={(e) => handleChange('videoUrl', e.target.value)}
                   className="w-full p-3 border rounded text-black"
-                  placeholder="https://drive.google.com/file/d/FILE_ID/view"
+                  placeholder="/videos/hero.mp4"
                 />
-                <p className="text-sm text-gray-600 mt-1">Paste Google Drive video link. Video akan digunakan sebagai background jika diisi.</p>
+                <p className="text-sm text-gray-600 mt-1">Upload video ke folder public/videos/ lalu masukkan path: /videos/nama-file.mp4</p>
               </div>
             </>
           )}

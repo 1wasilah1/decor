@@ -14,7 +14,7 @@
         "id": "Temukan Sekarang"
       },
       "image": "/images/hero-image.png",
-      "videoUrl": "https://drive.google.com/file/d/VIDEO_FILE_ID/view"
+      "videoUrl": "/videos/hero.mov"
     },
     "services": {
       "title": "Our Client",
