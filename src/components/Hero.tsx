@@ -36,8 +36,7 @@ export default function Hero() {
       >
         <source src="/videos/hero.mp4" type="video/mp4" />
       </video>
-      {!videoLoaded && <div className="absolute inset-0 bg-gray-900" style={{ zIndex: 0 }} />}
-      <div className="absolute inset-0 bg-black bg-opacity-40" style={{ zIndex: 1 }} />
+      <div className="absolute inset-0 bg-black bg-opacity-30" style={{ zIndex: 1 }} />
       <div className="relative max-w-4xl mx-auto px-4" style={{ zIndex: 10 }}>
         <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
           {settings?.title?.[language] || settings?.title || t('heroTitle')}
