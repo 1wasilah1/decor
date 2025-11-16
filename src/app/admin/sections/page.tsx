@@ -149,6 +149,17 @@ export default function SectionSettingsPage() {
                   className="w-full p-3 border rounded text-black"
                 />
               </div>
+              <div>
+                <label className="block text-black font-semibold mb-2">Video URL (Google Drive)</label>
+                <input
+                  type="text"
+                  value={getStringValue('videoUrl')}
+                  onChange={(e) => handleChange('videoUrl', e.target.value)}
+                  className="w-full p-3 border rounded text-black"
+                  placeholder="https://drive.google.com/file/d/FILE_ID/view"
+                />
+                <p className="text-sm text-gray-600 mt-1">Paste Google Drive video link. Video akan digunakan sebagai background jika diisi.</p>
+              </div>
             </>
           )}
 
