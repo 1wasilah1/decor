@@ -169,7 +169,7 @@
     {
       "id": "instagram",
       "name": "Instagram",
-      "visible": true,
+      "visible": false,
       "order": 9
     },
     {
@@ -181,7 +181,7 @@
     {
       "id": "popUpStore",
       "name": "Pop Up Store",
-      "visible": true,
+      "visible": false,
       "order": 11
     },
     {

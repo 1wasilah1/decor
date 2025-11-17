@@ -43,7 +43,7 @@ export default function Header() {
               }
               return (
                 <a key={menu.id} href={menu.href} className="text-white hover:text-gray-300 text-xs lg:text-sm font-medium whitespace-nowrap">
-                  {t(menu.id)}
+                  {menu.id === 'order' ? 'Online Order' : t(menu.id)}
                 </a>
               );
             })}
@@ -92,7 +92,7 @@ export default function Header() {
               }
               return (
                 <a key={menu.id} href={menu.href} className="block text-white hover:text-gray-300 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
-                  {t(menu.id)}
+                  {menu.id === 'order' ? 'Online Order' : t(menu.id)}
                 </a>
               );
             })}
