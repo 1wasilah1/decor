@@ -43,7 +43,7 @@ export default function OurClient() {
                     src={logo}
                     alt={`Client ${index + 1}`}
                     fill
-                    className="object-contain grayscale hover:grayscale-0 transition-all"
+                    className="object-contain transition-all"
                     unoptimized
                   />
                 </div>
