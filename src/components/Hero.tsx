@@ -27,21 +27,11 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto h-full grid grid-cols-1 lg:grid-cols-2 gap-0 relative z-10">
         {/* Left Content */}
         <div className="flex items-center justify-center px-8 lg:px-16 text-white relative">
-          {/* Company Names */}
-          <div className="absolute top-8 left-8 text-sm">
-            <div className="text-white opacity-80">PT. Multi Tritama Persada</div>
-            <div className="text-blue-400 font-semibold">PT. Blue Sky Indonusa</div>
-          </div>
 
 
 
-          {/* Arrow and Addition Text */}
-          <div className="absolute top-20 left-32 flex items-center text-white">
-            <svg className="w-16 h-8 mr-4" viewBox="0 0 64 32" fill="none">
-              <path d="M2 16H62M62 16L46 2M62 16L46 30" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-            <span className="text-lg font-bold">TAMBAHAN</span>
-          </div>
+
+
 
           {/* Main Content */}
           <div className="max-w-xl mt-16">

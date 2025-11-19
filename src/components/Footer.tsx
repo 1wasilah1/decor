@@ -49,10 +49,19 @@ export default function Footer() {
           {/* Contact Info */}
           <div>
             <h3 className="text-lg font-semibold mb-6 text-white">REACH US</h3>
-            <div className="space-y-3 text-sm">
-              <p className="text-gray-300 leading-relaxed" style={{whiteSpace: 'pre-line'}}>
-                {settings?.address || 'Jl. Peta Selatan\nGG. Hj. Syair No. 90, Kalideres,\nJakarta Barat, 11841\nIndonesia'}
-              </p>
+            <div className="space-y-4 text-sm">
+              <div>
+                <span className="text-gray-300">workshop :</span>
+                <span className="text-gray-300 ml-2">
+                  Jl. Peta Selatan GG. Hj. Syair No. 90, Kalideres, Jakarta Barat, 11841, Indonesia
+                </span>
+              </div>
+              <div>
+                <span className="text-gray-300">office :</span>
+                <span className="text-gray-300 ml-2">
+                  Taman Surya II Boulevard No.20 Blok D1, RT.7/RW.15, Pegadungan, Kec. Kalideres, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11830
+                </span>
+              </div>
             </div>
           </div>
         </div>
