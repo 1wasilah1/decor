@@ -8,6 +8,7 @@ export default function Hero() {
   const [currentVideo, setCurrentVideo] = useState(0);
   const videos = ['/videos/hero.mp4', '/videos/hero1.mp4', '/videos/hero2.mp4'];
   const [audioPlaying, setAudioPlaying] = useState(false);
+  const [audioRef, setAudioRef] = useState<HTMLAudioElement | null>(null);
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8700/api'}/section-settings/hero`)
@@ -22,6 +23,25 @@ export default function Hero() {
     }, 10000);
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    const handleUserInteraction = () => {
+      if (audioRef && !audioPlaying) {
+        audioRef.volume = 0.3;
+        audioRef.play().then(() => {
+          setAudioPlaying(true);
+        }).catch(() => {});
+      }
+    };
+
+    document.addEventListener('click', handleUserInteraction, { once: true });
+    document.addEventListener('keydown', handleUserInteraction, { once: true });
+    
+    return () => {
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('keydown', handleUserInteraction);
+    };
+  }, [audioRef, audioPlaying]);
 
   return (
     <section id="home" className="h-screen bg-sky-400 relative overflow-hidden">
@@ -72,9 +92,8 @@ export default function Hero() {
       
       {/* Background Music */}
       <audio 
-        autoPlay 
+        ref={(audio) => setAudioRef(audio)}
         loop 
-        muted={!audioPlaying}
         className="hidden"
       >
         <source src="/musik.mp3" type="audio/mpeg" />
@@ -82,16 +101,25 @@ export default function Hero() {
       
       {/* Music Control Button */}
       <button 
-        onClick={() => setAudioPlaying(!audioPlaying)}
+        onClick={() => {
+          if (audioRef) {
+            if (audioPlaying) {
+              audioRef.pause();
+            } else {
+              audioRef.play();
+            }
+            setAudioPlaying(!audioPlaying);
+          }
+        }}
         className="fixed bottom-6 right-6 z-50 bg-white bg-opacity-20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-opacity-30 transition-all"
       >
         {audioPlaying ? (
           <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM9.5 16.5v-9l7 4.5-7 4.5z"/>
+            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
           </svg>
         ) : (
           <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM9.5 16.5v-9l7 4.5-7 4.5z"/>
+            <path d="M8 5v14l11-7z"/>
           </svg>
         )}
       </button>
