@@ -48,7 +48,7 @@ export default function OurServices() {
           </div>
         )}
       </div>
+      <div className="border-b border-gray-200"></div>
     </section>
-    <div className="border-b border-gray-200"></div>
   );
 }
