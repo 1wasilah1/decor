@@ -7,6 +7,7 @@ export default function Hero() {
   const [settings, setSettings] = useState<any>(null);
   const [currentVideo, setCurrentVideo] = useState(0);
   const videos = ['/videos/hero.mp4', '/videos/hero1.mp4', '/videos/hero2.mp4'];
+  const [audioPlaying, setAudioPlaying] = useState(false);
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8700/api'}/section-settings/hero`)
@@ -23,7 +24,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section id="home" className="h-screen bg-gradient-to-br from-blue-600 to-blue-800 relative overflow-hidden">
+    <section id="home" className="h-screen bg-sky-400 relative overflow-hidden">
       <div className="max-w-7xl mx-auto h-full grid grid-cols-1 lg:grid-cols-2 gap-0 relative z-10">
         {/* Left Content */}
         <div className="flex items-center justify-center px-8 lg:px-16 text-white relative">
@@ -68,6 +69,32 @@ export default function Hero() {
 
         </div>
       </div>
+      
+      {/* Background Music */}
+      <audio 
+        autoPlay 
+        loop 
+        muted={!audioPlaying}
+        className="hidden"
+      >
+        <source src="/musik.mp3" type="audio/mpeg" />
+      </audio>
+      
+      {/* Music Control Button */}
+      <button 
+        onClick={() => setAudioPlaying(!audioPlaying)}
+        className="fixed bottom-6 right-6 z-50 bg-white bg-opacity-20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-opacity-30 transition-all"
+      >
+        {audioPlaying ? (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM9.5 16.5v-9l7 4.5-7 4.5z"/>
+          </svg>
+        ) : (
+          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zM9.5 16.5v-9l7 4.5-7 4.5z"/>
+          </svg>
+        )}
+      </button>
     </section>
   );
 }
