@@ -1,11 +1,27 @@
 'use client';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 
 export default function Header() {
   const { language, setLanguage, t } = useLanguage();
   const [menus, setMenus] = useState<{id: string; href: string; visible: boolean; order: number}[]>([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const router = useRouter();
+
+  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith('/#')) {
+      e.preventDefault();
+      const anchor = href.substring(2);
+      router.push('/');
+      setTimeout(() => {
+        const element = document.getElementById(anchor);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  };
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8700/api'}/menus`)
@@ -34,7 +50,12 @@ export default function Header() {
               }
               const href = menu.href.startsWith('#') ? `/${menu.href}` : menu.href;
               return (
-                <a key={menu.id} href={href} className="text-white hover:text-gray-300 text-xs lg:text-sm font-medium whitespace-nowrap">
+                <a 
+                  key={menu.id} 
+                  href={href} 
+                  onClick={(e) => handleAnchorClick(e, href)}
+                  className="text-white hover:text-gray-300 text-xs lg:text-sm font-medium whitespace-nowrap"
+                >
                   {menu.id === 'order' ? 'Online Order' : t(menu.id)}
                 </a>
               );
@@ -77,7 +98,12 @@ export default function Header() {
               }
               const href = menu.href.startsWith('#') ? `/${menu.href}` : menu.href;
               return (
-                <a key={menu.id} href={href} className="block text-white hover:text-gray-300 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
+                <a 
+                  key={menu.id} 
+                  href={href} 
+                  onClick={(e) => { handleAnchorClick(e, href); setMobileMenuOpen(false); }}
+                  className="block text-white hover:text-gray-300 py-2 text-sm"
+                >
                   {menu.id === 'order' ? 'Online Order' : t(menu.id)}
                 </a>
               );

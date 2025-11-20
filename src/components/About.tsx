@@ -12,10 +12,10 @@ export default function About() {
           <div className="relative">
             <div className="aspect-[4/3] relative rounded-lg overflow-hidden">
               <Image
-                src="/images/section1.png"
-                alt="Save Decor Exhibition"
+                src="/logo.png"
+                alt="Save Decor Logo"
                 fill
-                className="object-cover grayscale"
+                className="object-contain"
                 unoptimized
               />
             </div>
