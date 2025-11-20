@@ -1,15 +1,11 @@
 'use client';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useState, useEffect } from 'react';
-import VisionMission from './VisionMission';
-import WorkingProcess from './WorkingProcess';
-import Footer from './Footer';
 
 export default function Header() {
   const { language, setLanguage, t } = useLanguage();
   const [menus, setMenus] = useState<{id: string; href: string; visible: boolean; order: number}[]>([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [aboutModalOpen, setAboutModalOpen] = useState(false);
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8700/api'}/menus`)
@@ -31,13 +27,16 @@ export default function Header() {
             {menus.map(menu => {
               if (menu.id === 'aboutUs') {
                 return (
-                  <button 
-                    key={menu.id} 
-                    onClick={() => setAboutModalOpen(true)}
-                    className="text-white hover:text-gray-300 text-xs lg:text-sm font-medium whitespace-nowrap"
-                  >
+                  <a key={menu.id} href="/about" className="text-white hover:text-gray-300 text-xs lg:text-sm font-medium whitespace-nowrap">
                     {t(menu.id)}
-                  </button>
+                  </a>
+                );
+              }
+              if (menu.id === 'services') {
+                return (
+                  <a key={menu.id} href="/#our-services" className="text-white hover:text-gray-300 text-xs lg:text-sm font-medium whitespace-nowrap">
+                    {t(menu.id)}
+                  </a>
                 );
               }
               return (
@@ -77,13 +76,16 @@ export default function Header() {
             {menus.map(menu => {
               if (menu.id === 'aboutUs') {
                 return (
-                  <button 
-                    key={menu.id} 
-                    onClick={() => { setAboutModalOpen(true); setMobileMenuOpen(false); }}
-                    className="block text-white hover:text-gray-300 py-2 text-sm text-left w-full"
-                  >
+                  <a key={menu.id} href="/about" className="block text-white hover:text-gray-300 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
                     {t(menu.id)}
-                  </button>
+                  </a>
+                );
+              }
+              if (menu.id === 'services') {
+                return (
+                  <a key={menu.id} href="/#our-services" className="block text-white hover:text-gray-300 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
+                    {t(menu.id)}
+                  </a>
                 );
               }
               return (
@@ -102,25 +104,7 @@ export default function Header() {
         )}
       </div>
 
-      {/* About Modal */}
-      {aboutModalOpen && (
-        <div className="fixed inset-0 bg-white z-50 overflow-y-auto">
-          <div className="min-h-screen">
-            <button 
-              onClick={() => setAboutModalOpen(false)} 
-              className="fixed top-4 right-4 z-60 bg-black text-white w-10 h-10 rounded-full flex items-center justify-center text-2xl hover:bg-gray-800"
-            >
-              ×
-            </button>
-            <Header />
-            <VisionMission />
-            <WorkingProcess />
-            <div className="mt-auto">
-              <Footer />
-            </div>
-          </div>
-        </div>
-      )}
+
     </header>
   );
 }
