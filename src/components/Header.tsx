@@ -32,15 +32,9 @@ export default function Header() {
                   </a>
                 );
               }
-              if (menu.id === 'services') {
-                return (
-                  <a key={menu.id} href="/#our-services" className="text-white hover:text-gray-300 text-xs lg:text-sm font-medium whitespace-nowrap">
-                    {t(menu.id)}
-                  </a>
-                );
-              }
+              const href = menu.href.startsWith('#') ? `/${menu.href}` : menu.href;
               return (
-                <a key={menu.id} href={menu.href} className="text-white hover:text-gray-300 text-xs lg:text-sm font-medium whitespace-nowrap">
+                <a key={menu.id} href={href} className="text-white hover:text-gray-300 text-xs lg:text-sm font-medium whitespace-nowrap">
                   {menu.id === 'order' ? 'Online Order' : t(menu.id)}
                 </a>
               );
@@ -81,15 +75,9 @@ export default function Header() {
                   </a>
                 );
               }
-              if (menu.id === 'services') {
-                return (
-                  <a key={menu.id} href="/#our-services" className="block text-white hover:text-gray-300 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
-                    {t(menu.id)}
-                  </a>
-                );
-              }
+              const href = menu.href.startsWith('#') ? `/${menu.href}` : menu.href;
               return (
-                <a key={menu.id} href={menu.href} className="block text-white hover:text-gray-300 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
+                <a key={menu.id} href={href} className="block text-white hover:text-gray-300 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
                   {menu.id === 'order' ? 'Online Order' : t(menu.id)}
                 </a>
               );
