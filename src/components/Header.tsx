@@ -1,11 +1,14 @@
 'use client';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useState, useEffect } from 'react';
+import VisionMission from './VisionMission';
+import WorkingProcess from './WorkingProcess';
 
 export default function Header() {
   const { language, setLanguage, t } = useLanguage();
   const [menus, setMenus] = useState<{id: string; href: string; visible: boolean; order: number}[]>([]);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [aboutModalOpen, setAboutModalOpen] = useState(false);
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8700/api'}/menus`)
@@ -27,18 +30,13 @@ export default function Header() {
             {menus.map(menu => {
               if (menu.id === 'aboutUs') {
                 return (
-                  <div key={menu.id} className="relative group">
-                    <a href={menu.href} className="text-white hover:text-gray-300 text-xs lg:text-sm font-medium whitespace-nowrap">
-                      {t(menu.id)}
-                    </a>
-                    <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                      <div className="bg-black border border-gray-700 rounded shadow-lg py-2 min-w-[200px]">
-                        <a href="#vision-mission" className="block px-4 py-2 text-white hover:bg-gray-800 text-sm whitespace-nowrap">Vision And Mission</a>
-                        <a href="#team" className="block px-4 py-2 text-white hover:bg-gray-800 text-sm whitespace-nowrap">Meet The Team</a>
-                        <a href="#working-process" className="block px-4 py-2 text-white hover:bg-gray-800 text-sm whitespace-nowrap">Working Process</a>
-                      </div>
-                    </div>
-                  </div>
+                  <button 
+                    key={menu.id} 
+                    onClick={() => setAboutModalOpen(true)}
+                    className="text-white hover:text-gray-300 text-xs lg:text-sm font-medium whitespace-nowrap"
+                  >
+                    {t(menu.id)}
+                  </button>
                 );
               }
               return (
@@ -78,16 +76,13 @@ export default function Header() {
             {menus.map(menu => {
               if (menu.id === 'aboutUs') {
                 return (
-                  <div key={menu.id}>
-                    <a href={menu.href} className="block text-white hover:text-gray-300 py-2 text-sm" onClick={() => setMobileMenuOpen(false)}>
-                      {t(menu.id)}
-                    </a>
-                    <div className="pl-4">
-                      <a href="#vision-mission" className="block text-gray-300 hover:text-white py-1 text-xs" onClick={() => setMobileMenuOpen(false)}>Vision And Mission</a>
-                      <a href="#team" className="block text-gray-300 hover:text-white py-1 text-xs" onClick={() => setMobileMenuOpen(false)}>Meet The Team</a>
-                      <a href="#working-process" className="block text-gray-300 hover:text-white py-1 text-xs" onClick={() => setMobileMenuOpen(false)}>Working Process</a>
-                    </div>
-                  </div>
+                  <button 
+                    key={menu.id} 
+                    onClick={() => { setAboutModalOpen(true); setMobileMenuOpen(false); }}
+                    className="block text-white hover:text-gray-300 py-2 text-sm text-left w-full"
+                  >
+                    {t(menu.id)}
+                  </button>
                 );
               }
               return (
@@ -105,6 +100,24 @@ export default function Header() {
           </div>
         )}
       </div>
+
+      {/* About Modal */}
+      {aboutModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-90 z-50 overflow-y-auto" onClick={() => setAboutModalOpen(false)}>
+          <div className="min-h-screen" onClick={(e) => e.stopPropagation()}>
+            <div className="bg-white relative">
+              <button 
+                onClick={() => setAboutModalOpen(false)} 
+                className="fixed top-4 right-4 z-60 bg-black text-white w-10 h-10 rounded-full flex items-center justify-center text-2xl hover:bg-gray-800"
+              >
+                ×
+              </button>
+              <VisionMission />
+              <WorkingProcess />
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
