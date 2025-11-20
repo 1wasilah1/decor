@@ -3,6 +3,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useState, useEffect } from 'react';
 import VisionMission from './VisionMission';
 import WorkingProcess from './WorkingProcess';
+import Footer from './Footer';
 
 export default function Header() {
   const { language, setLanguage, t } = useLanguage();
@@ -103,17 +104,19 @@ export default function Header() {
 
       {/* About Modal */}
       {aboutModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-90 z-50 overflow-y-auto" onClick={() => setAboutModalOpen(false)}>
-          <div className="min-h-screen" onClick={(e) => e.stopPropagation()}>
-            <div className="bg-white relative">
-              <button 
-                onClick={() => setAboutModalOpen(false)} 
-                className="fixed top-4 right-4 z-60 bg-black text-white w-10 h-10 rounded-full flex items-center justify-center text-2xl hover:bg-gray-800"
-              >
-                ×
-              </button>
-              <VisionMission />
-              <WorkingProcess />
+        <div className="fixed inset-0 bg-white z-50 overflow-y-auto">
+          <div className="min-h-screen">
+            <button 
+              onClick={() => setAboutModalOpen(false)} 
+              className="fixed top-4 right-4 z-60 bg-black text-white w-10 h-10 rounded-full flex items-center justify-center text-2xl hover:bg-gray-800"
+            >
+              ×
+            </button>
+            <Header />
+            <VisionMission />
+            <WorkingProcess />
+            <div className="mt-auto">
+              <Footer />
             </div>
           </div>
         </div>
