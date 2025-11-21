@@ -4,9 +4,13 @@ import path from 'path';
 
 export async function GET() {
   try {
-    const dataPath = path.join(process.cwd(), 'backend', 'data.json');
-    const data = JSON.parse(fs.readFileSync(dataPath, 'utf-8'));
-    return NextResponse.json({ logos: data.clientLogos || [] });
+    const clientImagesPath = path.join(process.cwd(), 'public', 'images', 'client');
+    const files = fs.readdirSync(clientImagesPath);
+    const imageFiles = files.filter(file => 
+      /\.(jpg|jpeg|png|gif|webp)$/i.test(file)
+    );
+    const logos = imageFiles.map(file => `/images/client/${file}`);
+    return NextResponse.json({ logos });
   } catch {
     return NextResponse.json({ logos: [] });
   }

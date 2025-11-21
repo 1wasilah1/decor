@@ -63,7 +63,7 @@ export default function About() {
 
             <a 
               href="/compro.pdf" 
-              download="Save-Decor-Company-Profile.pdf"
+              download="BSI-X-MTP-COMPRO-2025.pdf"
               className="bg-black text-white px-6 py-3 rounded font-semibold hover:bg-gray-800 transition-colors flex items-center space-x-2 inline-flex"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
