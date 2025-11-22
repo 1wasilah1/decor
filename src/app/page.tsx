@@ -18,6 +18,7 @@ import Consultation from '@/components/Consultation';
 import Footer from '@/components/Footer';
 import WhatsAppButton from '@/components/WhatsAppButton';
 import OurClient from '@/components/OurClient';
+import MusicController from '@/components/MusicController';
 
 const components: Record<string, React.ComponentType> = {
   header: Header,
@@ -53,6 +54,7 @@ export default function Home() {
         const Component = components[section.id];
         return Component ? <Component key={section.id} /> : null;
       })}
+      <MusicController />
     </div>
   );
 }

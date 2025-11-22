@@ -15,6 +15,7 @@ export default function Portfolio() {
   const [activeTab, setActiveTab] = useState(0);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [showAll, setShowAll] = useState(false);
 
   const openModal = (image: string, index: number) => {
     setSelectedImage(image);
@@ -77,7 +78,10 @@ export default function Portfolio() {
               {portfolioData.map((folder, index) => (
                 <button
                   key={index}
-                  onClick={() => setActiveTab(index)}
+                  onClick={() => {
+                    setActiveTab(index);
+                    setShowAll(false);
+                  }}
                   className={`px-6 py-3 rounded-lg font-medium transition-all ${
                     activeTab === index
                       ? 'bg-black text-white'
@@ -91,28 +95,41 @@ export default function Portfolio() {
 
             {/* Images */}
             {portfolioData[activeTab] && (
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {portfolioData[activeTab].images.map((image, imageIndex) => (
-                  <div 
-                    key={imageIndex} 
-                    className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer bg-gray-200"
-                    onClick={() => openModal(image, imageIndex)}
-                  >
-                    <div className="relative h-64">
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-400"></div>
+              <div>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {(showAll ? portfolioData[activeTab].images : portfolioData[activeTab].images.slice(0, 4)).map((image, imageIndex) => (
+                    <div 
+                      key={imageIndex} 
+                      className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer bg-gray-200"
+                      onClick={() => openModal(image, imageIndex)}
+                    >
+                      <div className="relative h-64">
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-400"></div>
+                        </div>
+                        <Image
+                          src={image}
+                          alt={`${portfolioData[activeTab].folder} ${imageIndex + 1}`}
+                          fill
+                          className="object-cover transition-transform duration-300 group-hover:scale-105"
+                          quality={15}
+                          sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                        />
                       </div>
-                      <Image
-                        src={image}
-                        alt={`${portfolioData[activeTab].folder} ${imageIndex + 1}`}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                        quality={15}
-                        sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
-                      />
                     </div>
+                  ))}
+                </div>
+                
+                {portfolioData[activeTab].images.length > 4 && (
+                  <div className="text-center mt-8">
+                    <button
+                      onClick={() => setShowAll(!showAll)}
+                      className="bg-black text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors"
+                    >
+                      {showAll ? 'Show Less' : `Show More (${portfolioData[activeTab].images.length - 4} more)`}
+                    </button>
                   </div>
-                ))}
+                )}
               </div>
             )}
           </div>
