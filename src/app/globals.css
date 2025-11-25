@@ -56,7 +56,7 @@ h1, h2, h3, h4, h5, h6 {
 .text-woodmart-accent { color: var(--woodmart-accent); }
 .bg-woodmart-accent { background-color: var(--woodmart-accent); }
 
-/* Hide unwanted loading indicators */
+/* Hide all white spots and loading indicators */
 .fixed .animate-spin:not(.portfolio-loading) {
   display: none !important;
 }
@@ -66,13 +66,28 @@ h1, h2, h3, h4, h5, h6 {
   display: none !important;
 }
 
-/* Move white circles behind chat button */
+/* Hide white spots that appear above scroll button */
+.fixed .bg-white:not(.chat-bubble):not([class*="whatsapp"]):not([class*="chat"]) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  display: none !important;
+}
+
+/* Hide white circular elements */
+.fixed .rounded-full.bg-white:not(.chat-bubble) {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  display: none !important;
+}
+
+/* Move any remaining white elements behind buttons */
 .fixed button::after,
 .fixed button::before,
 .fixed .bg-white.rounded-full:not(.chat-bubble),
 .fixed .w-16.h-16.bg-white,
 .fixed .animate-pulse.bg-white {
   z-index: -1 !important;
+  opacity: 0 !important;
 }
 
 /* Ensure chat button stays on top */
@@ -80,8 +95,10 @@ h1, h2, h3, h4, h5, h6 {
   z-index: 9999 !important;
 }
 
-/* Hide the specific white circle element */
-.fixed.bottom-6.right-6.z-50.bg-white.bg-opacity-20.backdrop-blur-sm {
+/* Hide specific white circle elements */
+.fixed.bottom-6.right-6.z-50.bg-white.bg-opacity-20.backdrop-blur-sm,
+.fixed .bg-white.bg-opacity-20,
+.fixed .backdrop-blur-sm {
   display: none !important;
 }
 
@@ -89,5 +106,35 @@ h1, h2, h3, h4, h5, h6 {
 .__next-loading,
 .next-loading,
 [data-nextjs-scroll-focus-boundary]::after {
+  display: none !important;
+}
+
+/* Hide any white overlay elements */
+.fixed > .bg-white.rounded-full,
+.fixed > div > .bg-white.rounded-full {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  display: none !important;
+}
+
+/* Specific styling for scroll-to-top button */
+.scroll-to-top-btn {
+  background: rgba(31, 41, 55, 0.9) !important;
+  backdrop-filter: blur(10px) !important;
+  border: none !important;
+}
+
+.scroll-to-top-btn:hover {
+  background: rgba(17, 24, 39, 0.95) !important;
+}
+
+/* Ensure no white elements appear above buttons */
+.fixed.bottom-6.right-6 > *:not(.chat-bubble):not(.whatsapp-btn):not(.scroll-to-top-btn) {
+  display: none !important;
+}
+
+/* Hide any pseudo-elements that might create white spots */
+.fixed button:not(.whatsapp-btn):not(.scroll-to-top-btn)::before,
+.fixed button:not(.whatsapp-btn):not(.scroll-to-top-btn)::after {
   display: none !important;
 }
