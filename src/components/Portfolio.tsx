@@ -9,27 +9,30 @@ interface PortfolioFolder {
   serviceType: string;
 }
 
-// Portfolio data with placeholder images from main Google Drive folder
+// Real Google Drive portfolio data
+const mainFolderId = '1gsQUKmjCSB39_fFMDs8WNapF1PxDCxve';
+
+// Portfolio folders with real Google Drive images
 const portfolioFolders = [
-  { name: '3d Design', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
-  { name: 'Backdrop Rental', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
-  { name: 'Belleza Office MHM', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
-  { name: 'Blackpink Pop Up Store', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
-  { name: 'CNC Cutting', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
-  { name: 'EDDR', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
-  { name: 'GHFORCE', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
-  { name: 'MIHO Filler', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
-  { name: 'MINI BOOTH', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
-  { name: 'Medom Kpop Merch', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
-  { name: 'NETCUT', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
-  { name: 'PANCKOO', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
-  { name: 'Ppulbatu TXT Pop Up Store', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
-  { name: 'REESEE', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
-  { name: 'SAN GROUP', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
-  { name: 'Veraclara', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
-  { name: 'XIANGJUN', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
-  { name: 'ZANRAY', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
-  { name: 'Zero Base One', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] }
+  { name: '3d Design', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
+  { name: 'Backdrop Rental', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
+  { name: 'Belleza Office MHM', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
+  { name: 'Blackpink Pop Up Store', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
+  { name: 'CNC Cutting', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
+  { name: 'EDDR', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
+  { name: 'GHFORCE', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
+  { name: 'MIHO Filler', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
+  { name: 'MINI BOOTH', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
+  { name: 'Medom Kpop Merch', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
+  { name: 'NETCUT', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
+  { name: 'PANCKOO', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
+  { name: 'Ppulbatu TXT Pop Up Store', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
+  { name: 'REESEE', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
+  { name: 'SAN GROUP', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
+  { name: 'Veraclara', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
+  { name: 'XIANGJUN', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
+  { name: 'ZANRAY', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
+  { name: 'Zero Base One', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] }
 ];
 
 const serviceMapping: Record<string, string[]> = {
@@ -77,7 +80,7 @@ export default function Portfolio() {
   };
 
   useEffect(() => {
-    // Generate portfolio data from folder mapping
+    // Generate portfolio data with real Google Drive images
     const generatedData = portfolioFolders.map((folderData) => {
       let serviceType = 'Other';
       for (const [service, folderList] of Object.entries(serviceMapping)) {
