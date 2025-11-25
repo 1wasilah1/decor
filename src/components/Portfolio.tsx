@@ -9,38 +9,7 @@ interface PortfolioFolder {
   serviceType: string;
 }
 
-// Google Drive folder IDs
-const driveFolderIds: Record<string, string> = {
-  'GHFORCE': '1HDQTfi92WJ22fTAc2yErRuxRtqFn6YpA',
-  'MINI BOOTH': '1LZyuOHvkdCzy7NmItAQtfxoBJ00OJGeh',
-  'NETCUT': '1lrjF2wSF9SgN0iiC5wmUYek1igvjLOJS',
-  'PANCKOO': '17olcYAG-PnawUfENgBNZXuwEXam7TFRz',
-  'SAN GROUP': '1geWEf9rIoOWW-zTTf_JJAnw_8rv0AtB6',
-  'XIANGJUN': '1ZxMZghjTQg3_d4_GtZVdLwEEGq6zTJ9J',
-  'ZANRAY': '1uYinpNHUTBvTSQZk9is4KcilximnQY46',
-  'MIHO Filler': '1OeEucWewRlTtNMpKSIPNuncvD9ahcFUL',
-  'REESEE': '1KKiM9mXWKqdYcnMDFH6YCEVX0sHmryD6',
-  'Veraclara': '1o-0dScwB5pQZfqBQpyLPmz5Mq1suzec1',
-  'Belleza Office MHM': '1XTsXbaGeVorztt_isUT2T-Uo6QIFbqyZ',
-  'Medom Kpop Merch': '1hvkGIfDrZZt4Dr7lX_MY5ZSnP5vJk1aC',
-  'Blackpink Pop Up Store': '1Plif1K4ahYdwnapsy6A_MeKnKMf1CUOj',
-  'Ppulbatu TXT Pop Up Store': '1iJdJpGLXmXIdssK9ZRqRq5cx7exwSaAX',
-  'Zero Base One': '1-WAuIm4xfwVLENRvah2eJUkhNPKyELXA',
-  'EDDR': '1DjusXSpnwaTU_PGLE_COABai2unSUIO9',
-  'Backdrop Rental': '1eviD29OmQ4mr1PpyxeRgFfuRrzca_k5E',
-  'CNC Cutting': '18O76CKA9OJhQ8UaFuGAJLx7o9sqDEHPD',
-  '3d Design': '1RVrX84j2jYsVkV2NQQd26O0Wl3r1Og_w',
-  'BTS Pop Up Store': '1ZhJmqbM9k7t--XKGZNiN7n5gHrQ6sreU'
-};
-
-// Generate portfolio folders with Google Drive folder thumbnails
-const portfolioFolders = Object.entries(driveFolderIds).map(([name, folderId]) => ({
-  name,
-  images: [
-    `https://drive.google.com/thumbnail?id=${folderId}&sz=w800`,
-    `https://lh3.googleusercontent.com/d/${folderId}=w800-h600-c`
-  ]
-}));
+// Dynamic portfolio - automatically syncs with Google Drive folders
 
 const serviceMapping: Record<string, string[]> = {
   'Exhibition Booth Design and Build': ['GHFORCE', 'MINI BOOTH', 'NETCUT', 'PANCKOO', 'SAN GROUP', 'XIANGJUN', 'ZANRAY', 'MIHO Filler', 'REESEE', 'Veraclara'],
@@ -87,25 +56,36 @@ export default function Portfolio() {
   };
 
   useEffect(() => {
-    // Generate portfolio data with Google Drive folder thumbnails
-    const generatedData = portfolioFolders.map((folderData) => {
-      let serviceType = 'Other';
-      for (const [service, folderList] of Object.entries(serviceMapping)) {
-        if (folderList.includes(folderData.name)) {
-          serviceType = service;
-          break;
-        }
-      }
-      
-      return {
-        folder: folderData.name,
-        serviceType,
-        images: folderData.images
-      };
-    });
-    
-    setPortfolioData(generatedData);
-    setLoading(false);
+    // Fetch dynamic portfolio data from API
+    fetch('/api/drive-portfolio')
+      .then(res => res.json())
+      .then(data => {
+        const enrichedData = data.map((folderData: any) => {
+          let serviceType = 'Other';
+          for (const [service, folderList] of Object.entries(serviceMapping)) {
+            if (folderList.includes(folderData.folder)) {
+              serviceType = service;
+              break;
+            }
+          }
+          
+          // Use sample images as fallback
+          const sampleImages = ['/images/service1.png', '/images/service2.png', '/images/service3.png'];
+          
+          return {
+            folder: folderData.folder,
+            serviceType,
+            images: sampleImages // Fallback to sample images for now
+          };
+        });
+        
+        setPortfolioData(enrichedData);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error(err);
+        setLoading(false);
+      });
   }, []);
   
   useEffect(() => {
