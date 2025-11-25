@@ -42,7 +42,7 @@ export default function MusicController() {
             setAudioPlaying(!audioPlaying);
           }
         }}
-        className="fixed bottom-6 right-6 z-50 bg-white bg-opacity-20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-opacity-30 transition-all"
+        className="fixed bottom-32 right-6 z-50 bg-white bg-opacity-20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-opacity-30 transition-all"
       >
         {audioPlaying ? (
           <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
