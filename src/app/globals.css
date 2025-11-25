@@ -66,13 +66,18 @@ h1, h2, h3, h4, h5, h6 {
   display: none !important;
 }
 
-/* Hide white circles and loading spinners */
+/* Move white circles behind chat button */
 .fixed button::after,
 .fixed button::before,
 .fixed .bg-white.rounded-full:not(.chat-bubble),
 .fixed .w-16.h-16.bg-white,
 .fixed .animate-pulse.bg-white {
-  display: none !important;
+  z-index: -1 !important;
+}
+
+/* Ensure chat button stays on top */
+.fixed.bottom-6.right-6 {
+  z-index: 9999 !important;
 }
 
 /* Hide Next.js loading indicators */
