@@ -60,14 +60,17 @@ export async function GET() {
           console.log(`      🔗 Direct URL: https://drive.google.com/uc?id=${file.id}`);
         });
         
-        return imageFiles.map((file: any) => `https://drive.google.com/uc?id=${file.id}`);
+        return imageFiles.map((file: any) => ({
+          thumbnail: `https://drive.google.com/thumbnail?id=${file.id}&sz=w400`,
+          fullsize: `https://drive.google.com/uc?id=${file.id}`
+        }));
         
       } catch (error) {
         console.error(`Error fetching ${folderName}:`, error);
         // Return fallback images if API fails
         return [
-          '/images/service1.png',
-          '/images/service2.png'
+          { thumbnail: '/images/service1.png', fullsize: '/images/service1.png' },
+          { thumbnail: '/images/service2.png', fullsize: '/images/service2.png' }
         ];
       }
     };
@@ -80,8 +83,8 @@ export async function GET() {
       
       // If no images found, use fallback
       const finalImages = fileUrls.length > 0 ? fileUrls : [
-        '/images/service1.png',
-        '/images/service2.png'
+        { thumbnail: '/images/service1.png', fullsize: '/images/service1.png' },
+        { thumbnail: '/images/service2.png', fullsize: '/images/service2.png' }
       ];
       
       portfolioData.push({

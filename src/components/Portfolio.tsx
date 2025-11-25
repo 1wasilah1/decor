@@ -155,20 +155,21 @@ export default function Portfolio() {
                     <div 
                       key={imageIndex} 
                       className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer bg-gray-200"
-                      onClick={() => openModal(image, imageIndex)}
+                      onClick={() => openModal(typeof image === 'string' ? image : image.fullsize, imageIndex)}
                     >
                       <div className="relative h-64">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-400"></div>
                         </div>
                         <Image
-                          src={image}
+                          src={typeof image === 'string' ? image : image.thumbnail}
                           alt={`${portfolioData[activeTab].folder} ${imageIndex + 1}`}
                           fill
                           className="object-cover transition-transform duration-300 group-hover:scale-105"
-                          quality={30}
-                          sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                          quality={10}
+                          sizes="(max-width: 768px) 200px, (max-width: 1024px) 250px, 300px"
                           loading="lazy"
+                          priority={imageIndex < 4}
                           placeholder="blur"
                           blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+Rj9v/2Q=="
                         />
@@ -232,6 +233,7 @@ export default function Portfolio() {
                 className="object-contain"
                 quality={60}
                 priority
+                sizes="90vw"
               />
             </div>
 
