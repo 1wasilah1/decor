@@ -109,27 +109,32 @@ export default function Portfolio() {
     // Listen for filter events from OurServices
     const handleFilterPortfolio = (event: CustomEvent) => {
       const { serviceTitle } = event.detail;
+      console.log('🎯 Portfolio filter triggered:', serviceTitle);
+      console.log('📊 Available portfolio data:', portfolioData.length, 'folders');
       
-      // Find service type for this title
-      let matchedServiceType = null;
-      for (const [serviceType, folderList] of Object.entries(serviceMapping)) {
-        if (serviceType === serviceTitle) {
-          matchedServiceType = serviceType;
-          break;
-        }
-      }
+      // Direct match with service title
+      const matchedServiceType = serviceTitle;
+      console.log('🔍 Looking for service type:', matchedServiceType);
       
-      if (matchedServiceType) {
+      // Filter portfolio data by service type
+      const filtered = portfolioData.filter(folder => {
+        console.log(`📁 Checking folder: ${folder.folder} (service: ${folder.serviceType})`);
+        return folder.serviceType === matchedServiceType;
+      });
+      
+      console.log('✅ Filtered results:', filtered.length, 'folders');
+      console.log('📋 Filtered folders:', filtered.map(f => f.folder));
+      
+      if (filtered.length > 0) {
         setSelectedServiceType(matchedServiceType);
-        
-        // Filter portfolio data by service type
-        const filtered = portfolioData.filter(folder => folder.serviceType === matchedServiceType);
         setFilteredData(filtered);
-        
-        // Show portfolio and set first tab
         setIsVisible(true);
         setActiveTab(0);
         setShowAll(false);
+        console.log('🎉 Portfolio shown with', filtered.length, 'folders');
+      } else {
+        console.log('❌ No folders found for service:', matchedServiceType);
+        console.log('📝 Available service types:', [...new Set(portfolioData.map(f => f.serviceType))]);
       }
     };
     

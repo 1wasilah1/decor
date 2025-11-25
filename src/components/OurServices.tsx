@@ -75,14 +75,21 @@ export default function OurServices() {
             <button
               key={index}
               onClick={() => {
+                console.log('💆 Service card clicked:', service.title);
+                
                 const portfolioSection = document.getElementById('portfolio');
                 if (portfolioSection) {
+                  console.log('📍 Scrolling to portfolio section');
                   portfolioSection.scrollIntoView({ behavior: 'smooth' });
-                  // Dispatch custom event to filter portfolio
-                  window.dispatchEvent(new CustomEvent('filterPortfolio', { 
-                    detail: { serviceTitle: service.title } 
-                  }));
+                } else {
+                  console.log('❌ Portfolio section not found');
                 }
+                
+                // Dispatch custom event to filter portfolio
+                console.log('📡 Dispatching filterPortfolio event with:', service.title);
+                window.dispatchEvent(new CustomEvent('filterPortfolio', { 
+                  detail: { serviceTitle: service.title } 
+                }));
               }}
               className="p-6 border border-gray-200 rounded-lg hover:shadow-lg hover:border-gray-400 transition-all bg-white hover:bg-gray-50 cursor-pointer"
             >
