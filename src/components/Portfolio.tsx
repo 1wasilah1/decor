@@ -53,7 +53,7 @@ export default function Portfolio() {
     if (portfolioData[activeTab]) {
       const nextIndex = (selectedIndex + 1) % portfolioData[activeTab].images.length;
       setSelectedIndex(nextIndex);
-      setSelectedImage(portfolioData[activeTab].images[nextIndex]);
+      setSelectedImage(getImageUrl(portfolioData[activeTab].images[nextIndex], 'fullsize'));
     }
   };
 
@@ -61,7 +61,7 @@ export default function Portfolio() {
     if (portfolioData[activeTab]) {
       const prevIndex = (selectedIndex - 1 + portfolioData[activeTab].images.length) % portfolioData[activeTab].images.length;
       setSelectedIndex(prevIndex);
-      setSelectedImage(portfolioData[activeTab].images[prevIndex]);
+      setSelectedImage(getImageUrl(portfolioData[activeTab].images[prevIndex], 'fullsize'));
     }
   };
 
