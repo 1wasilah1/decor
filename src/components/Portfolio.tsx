@@ -285,7 +285,7 @@ export default function Portfolio() {
               </div>
             )}
           </div>
-        )}
+        ) : null}
 
         {/* Modal */}
         {selectedImage && (
