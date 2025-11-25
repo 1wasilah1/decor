@@ -9,10 +9,33 @@ interface PortfolioFolder {
   serviceType: string;
 }
 
+// Portfolio data with placeholder images from main Google Drive folder
+const portfolioFolders = [
+  { name: '3d Design', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
+  { name: 'Backdrop Rental', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
+  { name: 'Belleza Office MHM', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
+  { name: 'Blackpink Pop Up Store', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
+  { name: 'CNC Cutting', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
+  { name: 'EDDR', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
+  { name: 'GHFORCE', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
+  { name: 'MIHO Filler', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
+  { name: 'MINI BOOTH', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
+  { name: 'Medom Kpop Merch', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
+  { name: 'NETCUT', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
+  { name: 'PANCKOO', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
+  { name: 'Ppulbatu TXT Pop Up Store', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
+  { name: 'REESEE', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
+  { name: 'SAN GROUP', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
+  { name: 'Veraclara', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
+  { name: 'XIANGJUN', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
+  { name: 'ZANRAY', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] },
+  { name: 'Zero Base One', images: ['https://drive.google.com/uc?id=PLACEHOLDER'] }
+];
+
 const serviceMapping: Record<string, string[]> = {
-  'Exhibition Booth Design and Build': ['GHFORCE', 'MINI BOOTH', 'NETCUT', 'PANCKOO', 'SAN GROUP', 'XIANGJUN', 'ZANRAY', 'MIHO Filler', 'REESEE - 20 august', 'Veraclara'],
+  'Exhibition Booth Design and Build': ['GHFORCE', 'MINI BOOTH', 'NETCUT', 'PANCKOO', 'SAN GROUP', 'XIANGJUN', 'ZANRAY', 'MIHO Filler', 'REESEE', 'Veraclara'],
   'Interior Design and Build': ['Belleza Office MHM', 'Medom Kpop Merch'],
-  'Pop-up Store Design and Build': ['Blackpink Pop Up Store', 'Ppulbatu TXT Pop Up Store', 'Zero Base One '],
+  'Pop-up Store Design and Build': ['Blackpink Pop Up Store', 'Ppulbatu TXT Pop Up Store', 'Zero Base One'],
   'Event Equipment Rental': ['EDDR'],
   'Backdrop Rental': ['Backdrop Rental'],
   'Custom CNC Cutting Service': ['CNC Cutting'],
@@ -54,28 +77,25 @@ export default function Portfolio() {
   };
 
   useEffect(() => {
-    fetch('/api/portfolio')
-      .then(res => res.json())
-      .then(data => {
-        // Add service type to each folder
-        const enrichedData = data.map((folder: any) => {
-          let serviceType = 'Other';
-          for (const [service, folderList] of Object.entries(serviceMapping)) {
-            if (folderList.includes(folder.folder)) {
-              serviceType = service;
-              break;
-            }
-          }
-          return { ...folder, serviceType };
-        });
-        
-        setPortfolioData(enrichedData);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error(err);
-        setLoading(false);
-      });
+    // Generate portfolio data from folder mapping
+    const generatedData = portfolioFolders.map((folderData) => {
+      let serviceType = 'Other';
+      for (const [service, folderList] of Object.entries(serviceMapping)) {
+        if (folderList.includes(folderData.name)) {
+          serviceType = service;
+          break;
+        }
+      }
+      
+      return {
+        folder: folderData.name,
+        serviceType,
+        images: folderData.images
+      };
+    });
+    
+    setPortfolioData(generatedData);
+    setLoading(false);
   }, []);
   
   useEffect(() => {
