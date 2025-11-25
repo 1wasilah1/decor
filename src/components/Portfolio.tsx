@@ -3,14 +3,16 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
 
-interface ImageData {
+interface MediaData {
   thumbnail: string;
   fullsize: string;
+  type: 'image' | 'video';
+  mimeType?: string;
 }
 
 interface PortfolioFolder {
   folder: string;
-  images: (string | ImageData)[];
+  images: (string | MediaData)[];
   serviceType: string;
 }
 
@@ -34,10 +36,18 @@ export default function Portfolio() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [showAll, setShowAll] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [selectedServiceType, setSelectedServiceType] = useState<string | null>(null);
+  const [filteredData, setFilteredData] = useState<PortfolioFolder[]>([]);
 
-  const getImageUrl = (image: string | ImageData, type: 'thumbnail' | 'fullsize' = 'thumbnail'): string => {
+  const getImageUrl = (image: string | MediaData, type: 'thumbnail' | 'fullsize' = 'thumbnail'): string => {
     if (typeof image === 'string') return image;
     return type === 'thumbnail' ? image.thumbnail : image.fullsize;
+  };
+
+  const isVideo = (image: string | MediaData): boolean => {
+    if (typeof image === 'string') return false;
+    return image.type === 'video';
   };
 
   const openModal = (image: string, index: number) => {
@@ -50,18 +60,18 @@ export default function Portfolio() {
   };
 
   const nextImage = () => {
-    if (portfolioData[activeTab]) {
-      const nextIndex = (selectedIndex + 1) % portfolioData[activeTab].images.length;
+    if (filteredData[activeTab]) {
+      const nextIndex = (selectedIndex + 1) % filteredData[activeTab].images.length;
       setSelectedIndex(nextIndex);
-      setSelectedImage(getImageUrl(portfolioData[activeTab].images[nextIndex], 'fullsize'));
+      setSelectedImage(getImageUrl(filteredData[activeTab].images[nextIndex], 'fullsize'));
     }
   };
 
   const prevImage = () => {
-    if (portfolioData[activeTab]) {
-      const prevIndex = (selectedIndex - 1 + portfolioData[activeTab].images.length) % portfolioData[activeTab].images.length;
+    if (filteredData[activeTab]) {
+      const prevIndex = (selectedIndex - 1 + filteredData[activeTab].images.length) % filteredData[activeTab].images.length;
       setSelectedIndex(prevIndex);
-      setSelectedImage(getImageUrl(portfolioData[activeTab].images[prevIndex], 'fullsize'));
+      setSelectedImage(getImageUrl(filteredData[activeTab].images[prevIndex], 'fullsize'));
     }
   };
 
@@ -99,16 +109,27 @@ export default function Portfolio() {
     // Listen for filter events from OurServices
     const handleFilterPortfolio = (event: CustomEvent) => {
       const { serviceTitle } = event.detail;
-      const mappedFolders = serviceMapping[serviceTitle] || [];
       
-      if (mappedFolders.length > 0) {
-        const folderIndex = portfolioData.findIndex(folder => 
-          mappedFolders.includes(folder.folder)
-        );
-        if (folderIndex !== -1) {
-          setActiveTab(folderIndex);
-          setShowAll(false);
+      // Find service type for this title
+      let matchedServiceType = null;
+      for (const [serviceType, folderList] of Object.entries(serviceMapping)) {
+        if (serviceType === serviceTitle) {
+          matchedServiceType = serviceType;
+          break;
         }
+      }
+      
+      if (matchedServiceType) {
+        setSelectedServiceType(matchedServiceType);
+        
+        // Filter portfolio data by service type
+        const filtered = portfolioData.filter(folder => folder.serviceType === matchedServiceType);
+        setFilteredData(filtered);
+        
+        // Show portfolio and set first tab
+        setIsVisible(true);
+        setActiveTab(0);
+        setShowAll(false);
       }
     };
     
@@ -118,6 +139,19 @@ export default function Portfolio() {
       window.removeEventListener('filterPortfolio', handleFilterPortfolio as EventListener);
     };
   }, [portfolioData]);
+
+  // Update filtered data when portfolio data changes
+  useEffect(() => {
+    if (selectedServiceType && portfolioData.length > 0) {
+      const filtered = portfolioData.filter(folder => folder.serviceType === selectedServiceType);
+      setFilteredData(filtered);
+    }
+  }, [portfolioData, selectedServiceType]);
+
+  // Don't render if not visible
+  if (!isVisible) {
+    return null;
+  }
 
   return (
     <section id="portfolio" className="py-20 bg-white">
@@ -137,9 +171,14 @@ export default function Portfolio() {
           </div>
         ) : (
           <div>
-            {/* Tabs */}
+            {/* Service Type Title */}
+            <div className="text-center mb-8">
+              <h3 className="text-xl font-semibold text-gray-800">{selectedServiceType}</h3>
+            </div>
+
+            {/* Tabs - Only show filtered folders */}
             <div className="flex flex-wrap justify-center gap-2 mb-8">
-              {portfolioData.map((folder, index) => (
+              {filteredData.map((folder, index) => (
                 <button
                   key={index}
                   onClick={() => {
@@ -158,43 +197,64 @@ export default function Portfolio() {
             </div>
 
             {/* Images */}
-            {portfolioData[activeTab] && (
+            {filteredData[activeTab] && (
               <div>
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                  {(showAll ? portfolioData[activeTab].images : portfolioData[activeTab].images.slice(0, 8)).map((image, imageIndex) => (
+                  {(showAll ? filteredData[activeTab].images : filteredData[activeTab].images.slice(0, 8)).map((image, imageIndex) => (
                     <div 
                       key={imageIndex} 
                       className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer bg-gray-200"
                       onClick={() => openModal(getImageUrl(image, 'fullsize'), imageIndex)}
                     >
                       <div className="relative h-64">
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-400"></div>
-                        </div>
-                        <Image
-                          src={getImageUrl(image, 'thumbnail')}
-                          alt={`${portfolioData[activeTab].folder} ${imageIndex + 1}`}
-                          fill
-                          className="object-cover transition-transform duration-300 group-hover:scale-105"
-                          quality={10}
-                          sizes="(max-width: 768px) 200px, (max-width: 1024px) 250px, 300px"
-                          loading="lazy"
-                          priority={imageIndex < 4}
-                          placeholder="blur"
-                          blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+Rj9v/2Q=="
-                        />
+                        {isVideo(image) ? (
+                          <>
+                            <video 
+                              className="w-full h-full object-cover rounded-lg"
+                              poster={getImageUrl(image, 'thumbnail')}
+                              preload="metadata"
+                            >
+                              <source src={getImageUrl(image, 'fullsize')} type="video/mp4" />
+                            </video>
+                            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
+                              <div className="w-16 h-16 bg-white bg-opacity-80 rounded-full flex items-center justify-center">
+                                <svg className="w-8 h-8 text-black ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                  <path d="M8 5v14l11-7z"/>
+                                </svg>
+                              </div>
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-400"></div>
+                            </div>
+                            <Image
+                              src={getImageUrl(image, 'thumbnail')}
+                              alt={`${filteredData[activeTab].folder} ${imageIndex + 1}`}
+                              fill
+                              className="object-cover transition-transform duration-300 group-hover:scale-105"
+                              quality={10}
+                              sizes="(max-width: 768px) 200px, (max-width: 1024px) 250px, 300px"
+                              loading="lazy"
+                              priority={imageIndex < 4}
+                              placeholder="blur"
+                              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R+Rj9v/2Q=="
+                            />
+                          </>
+                        )}
                       </div>
                     </div>
                   ))}
                 </div>
                 
-                {portfolioData[activeTab].images.length > 8 && (
+                {filteredData[activeTab].images.length > 8 && (
                   <div className="text-center mt-8">
                     <button
                       onClick={() => setShowAll(!showAll)}
                       className="bg-black text-white px-6 py-3 rounded-lg font-medium hover:bg-gray-800 transition-colors"
                     >
-                      {showAll ? 'Show Less' : `Show More (${portfolioData[activeTab].images.length - 8} more)`}
+                      {showAll ? 'Show Less' : `Show More (${filteredData[activeTab].images.length - 8} more)`}
                     </button>
                   </div>
                 )}
@@ -249,7 +309,7 @@ export default function Portfolio() {
 
             {/* Image Counter */}
             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-sm">
-              {selectedIndex + 1} / {portfolioData[activeTab]?.images.length || 0}
+              {selectedIndex + 1} / {filteredData[activeTab]?.images.length || 0}
             </div>
           </div>
         )}

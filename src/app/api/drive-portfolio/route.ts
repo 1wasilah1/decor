@@ -49,20 +49,25 @@ export async function GET() {
         }
         
         const data = await response.json();
-        const imageFiles = data.files?.filter((file: any) => 
-          file.mimeType?.startsWith('image/')
+        const mediaFiles = data.files?.filter((file: any) => 
+          file.mimeType?.startsWith('image/') || file.mimeType?.startsWith('video/')
         ) || [];
         
-        console.log(`📄 REAL FILES FOUND (${imageFiles.length} images):`);
-        imageFiles.forEach((file: any, index: number) => {
-          console.log(`   ${index + 1}. ${file.name}`);
+        console.log(`📄 REAL FILES FOUND (${mediaFiles.length} media files):`);
+        mediaFiles.forEach((file: any, index: number) => {
+          const fileType = file.mimeType?.startsWith('video/') ? '🎥 VIDEO' : '🖼️ IMAGE';
+          console.log(`   ${index + 1}. ${file.name} (${fileType})`);
           console.log(`      🆔 File ID: ${file.id}`);
           console.log(`      🔗 Direct URL: https://drive.google.com/uc?id=${file.id}`);
         });
         
-        return imageFiles.map((file: any) => ({
-          thumbnail: `https://drive.google.com/thumbnail?id=${file.id}&sz=w400`,
-          fullsize: `https://drive.google.com/uc?id=${file.id}`
+        return mediaFiles.map((file: any) => ({
+          thumbnail: file.mimeType?.startsWith('video/') 
+            ? `https://drive.google.com/thumbnail?id=${file.id}&sz=w400`
+            : `https://drive.google.com/thumbnail?id=${file.id}&sz=w400`,
+          fullsize: `https://drive.google.com/uc?id=${file.id}`,
+          type: file.mimeType?.startsWith('video/') ? 'video' : 'image',
+          mimeType: file.mimeType
         }));
         
       } catch (error) {
