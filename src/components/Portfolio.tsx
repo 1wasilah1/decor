@@ -109,8 +109,6 @@ export default function Portfolio() {
     // Listen for filter events from OurServices
     const handleFilterPortfolio = (event: CustomEvent) => {
       const { serviceTitle } = event.detail;
-      console.log('🎯 Portfolio filter triggered:', serviceTitle);
-      console.log('📊 Available portfolio data:', portfolioData.length, 'folders');
       
       // Map service titles to correct service types
       const serviceMap: Record<string, string> = {
@@ -126,16 +124,11 @@ export default function Portfolio() {
       };
       
       const matchedServiceType = serviceMap[serviceTitle] || serviceTitle;
-      console.log('🔍 Mapped service type:', serviceTitle, '→', matchedServiceType);
       
       // Filter portfolio data by service type
-      const filtered = portfolioData.filter(folder => {
-        console.log(`📁 Checking folder: ${folder.folder} (service: ${folder.serviceType})`);
-        return folder.serviceType === matchedServiceType;
-      });
-      
-      console.log('✅ Filtered results:', filtered.length, 'folders');
-      console.log('📋 Filtered folders:', filtered.map(f => f.folder));
+      const filtered = portfolioData.filter(folder => 
+        folder.serviceType === matchedServiceType
+      );
       
       if (filtered.length > 0) {
         setSelectedServiceType(matchedServiceType);
@@ -143,10 +136,6 @@ export default function Portfolio() {
         setIsVisible(true);
         setActiveTab(0);
         setShowAll(false);
-        console.log('🎉 Portfolio shown with', filtered.length, 'folders');
-      } else {
-        console.log('❌ No folders found for service:', matchedServiceType);
-        console.log('📝 Available service types:', [...new Set(portfolioData.map(f => f.serviceType))]);
       }
     };
     
@@ -165,8 +154,9 @@ export default function Portfolio() {
     }
   }, [portfolioData, selectedServiceType]);
 
-  // Always render but hide with CSS if not visible
-  const sectionClass = isVisible ? "py-20 bg-white" : "py-20 bg-white hidden";
+  // Show loading animation when not visible but data is loading
+  const showLoading = !isVisible && portfolioData.length === 0;
+  const sectionClass = isVisible ? "py-20 bg-white" : showLoading ? "py-20 bg-white" : "py-20 bg-white hidden";
 
   return (
     <section id="portfolio" className={sectionClass}>
@@ -180,11 +170,30 @@ export default function Portfolio() {
           </p>
         </div>
 
-        {loading ? (
-          <div className="text-center py-12">
+        {showLoading ? (
+          <div className="text-center py-20">
+            <div className="flex justify-center items-center space-x-2 mb-6">
+              <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
+              <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
+              <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
+            </div>
+            <div className="flex justify-center items-end space-x-1 mb-6">
+              {[...Array(15)].map((_, i) => (
+                <div 
+                  key={i}
+                  className="bg-gradient-to-t from-blue-400 to-blue-600 rounded-full animate-pulse"
+                  style={{
+                    width: '4px',
+                    height: `${20 + Math.sin(i * 0.5) * 15}px`,
+                    animationDelay: `${i * 100}ms`,
+                    animationDuration: '1.5s'
+                  }}
+                ></div>
+              ))}
+            </div>
             <p className="text-gray-600">Loading portfolio...</p>
           </div>
-        ) : (
+        ) : isVisible ? (
           <div>
             {/* Service Type Title */}
             <div className="text-center mb-8">
