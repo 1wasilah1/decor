@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 export default function OurServices() {
   const { t } = useLanguage();
-  const [selectedService, setSelectedService] = useState<number | null>(null);
+
   const [showAll, setShowAll] = useState(false);
 
   const services = [
@@ -74,7 +74,16 @@ export default function OurServices() {
           {services.map((service, index) => (
             <button
               key={index}
-              onClick={() => setSelectedService(index)}
+              onClick={() => {
+                const portfolioSection = document.getElementById('portfolio');
+                if (portfolioSection) {
+                  portfolioSection.scrollIntoView({ behavior: 'smooth' });
+                  // Dispatch custom event to filter portfolio
+                  window.dispatchEvent(new CustomEvent('filterPortfolio', { 
+                    detail: { serviceTitle: service.title } 
+                  }));
+                }
+              }}
               className="p-6 border border-gray-200 rounded-lg hover:shadow-lg hover:border-gray-400 transition-all bg-white hover:bg-gray-50 cursor-pointer"
             >
               <p className="text-gray-800 font-medium text-center">{service.title}</p>
@@ -124,45 +133,7 @@ export default function OurServices() {
           </div>
         )}
 
-        {selectedService !== null && !showAll && (
-          <div className="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4" onClick={() => setSelectedService(null)}>
-            <div className="bg-white rounded-lg max-w-5xl w-full max-h-[90vh] overflow-y-auto relative" onClick={(e) => e.stopPropagation()}>
-              <button onClick={() => setSelectedService(null)} className="absolute top-4 right-4 text-4xl text-gray-600 hover:text-gray-900 z-10">
-                &times;
-              </button>
-              <div className="grid md:grid-cols-2 gap-8 p-8">
-                <div className="order-2 md:order-1">
-                  <h3 className="text-3xl font-bold text-gray-900 mb-6">{services[selectedService].title}</h3>
-                  <p className="text-lg text-gray-700 leading-relaxed">{services[selectedService].desc}</p>
-                </div>
-                <div className="order-1 md:order-2">
-                  {services[selectedService].type === 'video' ? (
-                    <video 
-                      className="w-full h-64 md:h-80 object-cover rounded-lg" 
-                      controls 
-                      autoPlay 
-                      muted
-                      onError={(e) => console.log('Video error:', e)}
-                    >
-                      <source src={services[selectedService].media} type="video/mp4" />
-                    </video>
-                  ) : (
-                    <img 
-                      src={services[selectedService].media} 
-                      alt={services[selectedService].title}
-                      className="w-full h-64 md:h-80 object-cover rounded-lg"
-                      onError={(e) => {
-                        console.log('Image error:', services[selectedService].media);
-                        e.currentTarget.style.display = 'none';
-                      }}
-                      onLoad={() => console.log('Image loaded:', services[selectedService].media)}
-                    />
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+
       </div>
     </section>
   );

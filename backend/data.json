@@ -131,39 +131,39 @@
       "order": 2
     },
     {
+      "id": "portfolio",
+      "name": "Portfolio",
+      "visible": true,
+      "order": 3
+    },
+    {
       "id": "about",
       "name": "About",
       "visible": true,
-      "order": 3
+      "order": 4
     },
     {
       "id": "visionMission",
       "name": "Vision & Mission",
       "visible": true,
-      "order": 4
+      "order": 5
     },
     {
       "id": "team",
       "name": "Team",
       "visible": false,
-      "order": 5
+      "order": 6
     },
     {
       "id": "workingProcess",
       "name": "Working Process",
       "visible": true,
-      "order": 6
+      "order": 7
     },
     {
       "id": "services",
       "name": "Our Client (Text)",
       "visible": false,
-      "order": 7
-    },
-    {
-      "id": "portfolio",
-      "name": "Portfolio",
-      "visible": true,
       "order": 8
     },
     {
