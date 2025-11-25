@@ -2,6 +2,13 @@ import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
+    console.log('=== GOOGLE DRIVE PORTFOLIO API ===');
+    
+    // Google Drive API key
+    const API_KEY = process.env.GOOGLE_DRIVE_API_KEY || 
+                   process.env.NEXT_PUBLIC_GOOGLE_DRIVE_API_KEY || 
+                   'AIzaSyC-PUT_YOUR_ACTUAL_API_KEY_HERE'; // Replace with your actual API key
+    
     // Google Drive folder IDs
     const folders = {
       'GHFORCE': '1HDQTfi92WJ22fTAc2yErRuxRtqFn6YpA',
@@ -26,22 +33,64 @@ export async function GET() {
       'BTS Pop Up Store': '1ZhJmqbM9k7t--XKGZNiN7n5gHrQ6sreU'
     };
 
-    // Generate portfolio data with working Google Drive URLs
-    const portfolioData = Object.entries(folders).map(([name, folderId]) => {
-      // Use different Google Drive URL formats
-      const driveImages = [
-        `https://drive.google.com/uc?export=view&id=${folderId}`,
-        `https://lh3.googleusercontent.com/u/0/d/${folderId}=w800-h600-c-k-no`
-      ];
+    // Real Google Drive API function to get folder contents
+    const getFolderContents = async (folderName: string, folderId: string) => {
+      console.log(`\n📁 FETCHING REAL FOLDER: ${folderName}`);
+      console.log(`🆔 ID: ${folderId}`);
       
-      return {
+      try {
+        const response = await fetch(
+          `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&key=${API_KEY}&fields=files(id,name,mimeType)`
+        );
+        
+        if (!response.ok) {
+          console.error(`API Error for ${folderName}:`, response.status, response.statusText);
+          return [];
+        }
+        
+        const data = await response.json();
+        const imageFiles = data.files?.filter((file: any) => 
+          file.mimeType?.startsWith('image/')
+        ) || [];
+        
+        console.log(`📄 REAL FILES FOUND (${imageFiles.length} images):`);
+        imageFiles.forEach((file: any, index: number) => {
+          console.log(`   ${index + 1}. ${file.name}`);
+          console.log(`      🆔 File ID: ${file.id}`);
+          console.log(`      🔗 Direct URL: https://drive.google.com/uc?id=${file.id}`);
+        });
+        
+        return imageFiles.map((file: any) => `https://drive.google.com/uc?id=${file.id}`);
+        
+      } catch (error) {
+        console.error(`Error fetching ${folderName}:`, error);
+        return [];
+      }
+    };
+    
+    // Generate portfolio data with real Google Drive contents
+    const portfolioData = [];
+    
+    for (const [name, folderId] of Object.entries(folders)) {
+      const fileUrls = await getFolderContents(name, folderId);
+      
+      portfolioData.push({
         folder: name,
-        images: driveImages
-      };
+        images: fileUrls
+      });
+    }
+    
+    console.log(`\n📊 SUMMARY:`);
+    console.log(`Total folders processed: ${portfolioData.length}`);
+    console.log(`\n📋 PORTFOLIO STRUCTURE:`);
+    portfolioData.forEach((folder, index) => {
+      console.log(`${index + 1}. ${folder.folder} (${folder.images.length} images)`);
     });
 
+    console.log('=== API RESPONSE READY ===');
     return NextResponse.json(portfolioData);
   } catch (error) {
+    console.error('=== API ERROR ===');
     console.error('Error:', error);
     return NextResponse.json({ error: 'Failed to fetch portfolio' }, { status: 500 });
   }
