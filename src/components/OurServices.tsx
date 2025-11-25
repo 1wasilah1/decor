@@ -75,18 +75,12 @@ export default function OurServices() {
             <button
               key={index}
               onClick={() => {
-                console.log('💆 Service card clicked:', service.title);
-                
                 const portfolioSection = document.getElementById('portfolio');
                 if (portfolioSection) {
-                  console.log('📍 Scrolling to portfolio section');
                   portfolioSection.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                  console.log('❌ Portfolio section not found');
                 }
                 
                 // Dispatch custom event to filter portfolio
-                console.log('📡 Dispatching filterPortfolio event with:', service.title);
                 window.dispatchEvent(new CustomEvent('filterPortfolio', { 
                   detail: { serviceTitle: service.title } 
                 }));

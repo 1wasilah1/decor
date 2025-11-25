@@ -112,9 +112,21 @@ export default function Portfolio() {
       console.log('🎯 Portfolio filter triggered:', serviceTitle);
       console.log('📊 Available portfolio data:', portfolioData.length, 'folders');
       
-      // Direct match with service title
-      const matchedServiceType = serviceTitle;
-      console.log('🔍 Looking for service type:', matchedServiceType);
+      // Map service titles to correct service types
+      const serviceMap: Record<string, string> = {
+        'Exhibition Booth Design (Custom Design)': 'Exhibition Booth Design and Build',
+        'Interior Contractor': 'Interior Design and Build', 
+        'Rental Equipment': 'Event Equipment Rental',
+        'Rental Backdrop': 'Backdrop Rental',
+        'Backdrop Photobooth': 'Backdrop Rental',
+        'Special System R8/Maxima Rental': 'System Maxima/R8 Rental',
+        'Stage Rental': 'Stage Rental',
+        'Custom CNC Cutting': 'Custom CNC Cutting Service',
+        'Custom Standing Character': 'Custom Standing Character Maker'
+      };
+      
+      const matchedServiceType = serviceMap[serviceTitle] || serviceTitle;
+      console.log('🔍 Mapped service type:', serviceTitle, '→', matchedServiceType);
       
       // Filter portfolio data by service type
       const filtered = portfolioData.filter(folder => {
@@ -153,13 +165,11 @@ export default function Portfolio() {
     }
   }, [portfolioData, selectedServiceType]);
 
-  // Don't render if not visible
-  if (!isVisible) {
-    return null;
-  }
+  // Always render but hide with CSS if not visible
+  const sectionClass = isVisible ? "py-20 bg-white" : "py-20 bg-white hidden";
 
   return (
-    <section id="portfolio" className="py-20 bg-white">
+    <section id="portfolio" className={sectionClass}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
