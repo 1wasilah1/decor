@@ -3,9 +3,14 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
 
+interface ImageData {
+  thumbnail: string;
+  fullsize: string;
+}
+
 interface PortfolioFolder {
   folder: string;
-  images: string[];
+  images: (string | ImageData)[];
   serviceType: string;
 }
 
@@ -29,6 +34,11 @@ export default function Portfolio() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [showAll, setShowAll] = useState(false);
+
+  const getImageUrl = (image: string | ImageData, type: 'thumbnail' | 'fullsize' = 'thumbnail'): string => {
+    if (typeof image === 'string') return image;
+    return type === 'thumbnail' ? image.thumbnail : image.fullsize;
+  };
 
   const openModal = (image: string, index: number) => {
     setSelectedImage(image);
@@ -155,14 +165,14 @@ export default function Portfolio() {
                     <div 
                       key={imageIndex} 
                       className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow cursor-pointer bg-gray-200"
-                      onClick={() => openModal(typeof image === 'string' ? image : image.fullsize, imageIndex)}
+                      onClick={() => openModal(getImageUrl(image, 'fullsize'), imageIndex)}
                     >
                       <div className="relative h-64">
                         <div className="absolute inset-0 flex items-center justify-center">
                           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-400"></div>
                         </div>
                         <Image
-                          src={typeof image === 'string' ? image : image.thumbnail}
+                          src={getImageUrl(image, 'thumbnail')}
                           alt={`${portfolioData[activeTab].folder} ${imageIndex + 1}`}
                           fill
                           className="object-cover transition-transform duration-300 group-hover:scale-105"
