@@ -26,14 +26,19 @@ export async function GET() {
       'BTS Pop Up Store': '1ZhJmqbM9k7t--XKGZNiN7n5gHrQ6sreU'
     };
 
-    // Generate portfolio data with Google Drive folder viewer
-    const portfolioData = Object.entries(folders).map(([name, folderId]) => ({
-      folder: name,
-      images: [
-        `https://drive.google.com/embeddedfolderview?id=${folderId}#grid`,
-        `https://drive.google.com/drive/folders/${folderId}`
-      ]
-    }));
+    // Generate portfolio data with working Google Drive URLs
+    const portfolioData = Object.entries(folders).map(([name, folderId]) => {
+      // Use different Google Drive URL formats
+      const driveImages = [
+        `https://drive.google.com/uc?export=view&id=${folderId}`,
+        `https://lh3.googleusercontent.com/u/0/d/${folderId}=w800-h600-c-k-no`
+      ];
+      
+      return {
+        folder: name,
+        images: driveImages
+      };
+    });
 
     return NextResponse.json(portfolioData);
   } catch (error) {

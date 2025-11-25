@@ -69,13 +69,10 @@ export default function Portfolio() {
             }
           }
           
-          // Use sample images as fallback
-          const sampleImages = ['/images/service1.png', '/images/service2.png', '/images/service3.png'];
-          
           return {
             folder: folderData.folder,
             serviceType,
-            images: sampleImages // Fallback to sample images for now
+            images: folderData.images
           };
         });
         
