@@ -9,31 +9,38 @@ interface PortfolioFolder {
   serviceType: string;
 }
 
-// Real Google Drive portfolio data
-const mainFolderId = '1gsQUKmjCSB39_fFMDs8WNapF1PxDCxve';
+// Google Drive folder IDs
+const driveFolderIds: Record<string, string> = {
+  'GHFORCE': '1HDQTfi92WJ22fTAc2yErRuxRtqFn6YpA',
+  'MINI BOOTH': '1LZyuOHvkdCzy7NmItAQtfxoBJ00OJGeh',
+  'NETCUT': '1lrjF2wSF9SgN0iiC5wmUYek1igvjLOJS',
+  'PANCKOO': '17olcYAG-PnawUfENgBNZXuwEXam7TFRz',
+  'SAN GROUP': '1geWEf9rIoOWW-zTTf_JJAnw_8rv0AtB6',
+  'XIANGJUN': '1ZxMZghjTQg3_d4_GtZVdLwEEGq6zTJ9J',
+  'ZANRAY': '1uYinpNHUTBvTSQZk9is4KcilximnQY46',
+  'MIHO Filler': '1OeEucWewRlTtNMpKSIPNuncvD9ahcFUL',
+  'REESEE': '1KKiM9mXWKqdYcnMDFH6YCEVX0sHmryD6',
+  'Veraclara': '1o-0dScwB5pQZfqBQpyLPmz5Mq1suzec1',
+  'Belleza Office MHM': '1XTsXbaGeVorztt_isUT2T-Uo6QIFbqyZ',
+  'Medom Kpop Merch': '1hvkGIfDrZZt4Dr7lX_MY5ZSnP5vJk1aC',
+  'Blackpink Pop Up Store': '1Plif1K4ahYdwnapsy6A_MeKnKMf1CUOj',
+  'Ppulbatu TXT Pop Up Store': '1iJdJpGLXmXIdssK9ZRqRq5cx7exwSaAX',
+  'Zero Base One': '1-WAuIm4xfwVLENRvah2eJUkhNPKyELXA',
+  'EDDR': '1DjusXSpnwaTU_PGLE_COABai2unSUIO9',
+  'Backdrop Rental': '1eviD29OmQ4mr1PpyxeRgFfuRrzca_k5E',
+  'CNC Cutting': '18O76CKA9OJhQ8UaFuGAJLx7o9sqDEHPD',
+  '3d Design': '1RVrX84j2jYsVkV2NQQd26O0Wl3r1Og_w',
+  'BTS Pop Up Store': '1ZhJmqbM9k7t--XKGZNiN7n5gHrQ6sreU'
+};
 
-// Portfolio folders with real Google Drive images
-const portfolioFolders = [
-  { name: '3d Design', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
-  { name: 'Backdrop Rental', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
-  { name: 'Belleza Office MHM', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
-  { name: 'Blackpink Pop Up Store', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
-  { name: 'CNC Cutting', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
-  { name: 'EDDR', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
-  { name: 'GHFORCE', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
-  { name: 'MIHO Filler', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
-  { name: 'MINI BOOTH', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
-  { name: 'Medom Kpop Merch', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
-  { name: 'NETCUT', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
-  { name: 'PANCKOO', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
-  { name: 'Ppulbatu TXT Pop Up Store', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
-  { name: 'REESEE', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
-  { name: 'SAN GROUP', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
-  { name: 'Veraclara', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
-  { name: 'XIANGJUN', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
-  { name: 'ZANRAY', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] },
-  { name: 'Zero Base One', images: [`https://lh3.googleusercontent.com/d/${mainFolderId}=w800-h600`] }
-];
+// Generate portfolio folders with Google Drive folder thumbnails
+const portfolioFolders = Object.entries(driveFolderIds).map(([name, folderId]) => ({
+  name,
+  images: [
+    `https://drive.google.com/thumbnail?id=${folderId}&sz=w800`,
+    `https://lh3.googleusercontent.com/d/${folderId}=w800-h600-c`
+  ]
+}));
 
 const serviceMapping: Record<string, string[]> = {
   'Exhibition Booth Design and Build': ['GHFORCE', 'MINI BOOTH', 'NETCUT', 'PANCKOO', 'SAN GROUP', 'XIANGJUN', 'ZANRAY', 'MIHO Filler', 'REESEE', 'Veraclara'],
@@ -80,7 +87,7 @@ export default function Portfolio() {
   };
 
   useEffect(() => {
-    // Generate portfolio data with real Google Drive images
+    // Generate portfolio data with Google Drive folder thumbnails
     const generatedData = portfolioFolders.map((folderData) => {
       let serviceType = 'Other';
       for (const [service, folderList] of Object.entries(serviceMapping)) {
