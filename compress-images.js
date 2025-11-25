@@ -36,8 +36,8 @@ async function compressImages() {
       
       try {
         await sharp(inputPath)
-          .resize(800, 600, { fit: 'inside', withoutEnlargement: true })
-          .jpeg({ quality: 70, progressive: true })
+          .resize(400, 300, { fit: 'inside', withoutEnlargement: true })
+          .jpeg({ quality: 40, progressive: true })
           .toFile(outputPath);
         
         console.log(`✓ Compressed: ${file}`);
