@@ -20,7 +20,7 @@ export default function Footer() {
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
             <div className="mb-6">
-              <span className="text-2xl font-bold">{settings?.companyName || 'PT. Multi Tritama Persada &amp; PT. Blue Sky Indonusa'}</span>
+              <span className="text-2xl font-bold">PT. Multi Tritama Persada &amp; PT. Blue Sky Indonusa</span>
             </div>
             <p className="text-gray-300 mb-8 max-w-md leading-relaxed">
               {settings?.description || t('footerDesc')}
