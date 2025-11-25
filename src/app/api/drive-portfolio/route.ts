@@ -64,7 +64,11 @@ export async function GET() {
         
       } catch (error) {
         console.error(`Error fetching ${folderName}:`, error);
-        return [];
+        // Return fallback images if API fails
+        return [
+          '/images/service1.png',
+          '/images/service2.png'
+        ];
       }
     };
     
@@ -74,9 +78,15 @@ export async function GET() {
     for (const [name, folderId] of Object.entries(folders)) {
       const fileUrls = await getFolderContents(name, folderId);
       
+      // If no images found, use fallback
+      const finalImages = fileUrls.length > 0 ? fileUrls : [
+        '/images/service1.png',
+        '/images/service2.png'
+      ];
+      
       portfolioData.push({
         folder: name,
-        images: fileUrls
+        images: finalImages
       });
     }
     
