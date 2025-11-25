@@ -20,7 +20,7 @@ export default function Footer() {
           {/* Company Info */}
           <div className="col-span-1 md:col-span-2">
             <div className="mb-6">
-              <span className="text-2xl font-bold">{settings?.companyName || 'PT. Multi Tritama Persada'}</span>
+              <span className="text-2xl font-bold">{settings?.companyName || 'PT. Multi Tritama Persada &amp; PT. Blue Sky Indonusa'}</span>
             </div>
             <p className="text-gray-300 mb-8 max-w-md leading-relaxed">
               {settings?.description || t('footerDesc')}
@@ -70,7 +70,7 @@ export default function Footer() {
         <div className="border-t border-gray-800 mt-12 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm mb-4 md:mb-0">
-              © 2025 PT. Multi Tritama Persada. All rights reserved.
+              © 2025 PT. Multi Tritama Persada &amp; PT. Blue Sky Indonusa. All rights reserved.
             </p>
             <div className="flex space-x-6 text-sm">
               <a href="#" className="text-gray-400 hover:text-white transition-colors">{t('privacyPolicy')}</a>
