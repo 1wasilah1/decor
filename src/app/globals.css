@@ -65,3 +65,19 @@ h1, h2, h3, h4, h5, h6 {
 .fixed > div:has(.animate-spin):not(.portfolio-container) {
   display: none !important;
 }
+
+/* Hide white circles and loading spinners */
+.fixed button::after,
+.fixed button::before,
+.fixed .bg-white.rounded-full:not(.chat-bubble),
+.fixed .w-16.h-16.bg-white,
+.fixed .animate-pulse.bg-white {
+  display: none !important;
+}
+
+/* Hide Next.js loading indicators */
+.__next-loading,
+.next-loading,
+[data-nextjs-scroll-focus-boundary]::after {
+  display: none !important;
+}
