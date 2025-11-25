@@ -4,7 +4,7 @@ import path from 'path';
 
 export async function GET() {
   try {
-    const portfolioPath = path.join(process.cwd(), 'public', 'portofolio');
+    const portfolioPath = path.join(process.cwd(), 'public', 'portofolio-compressed');
     
     if (!fs.existsSync(portfolioPath)) {
       return NextResponse.json({ error: 'Portfolio directory not found' }, { status: 404 });
@@ -22,7 +22,7 @@ export async function GET() {
           return ['.jpg', '.jpeg', '.png', '.gif', '.webp'].includes(ext);
         })
         .slice(0, 20) // Limit to first 20 images per folder
-        .map(file => `/portofolio/${folder}/${file}`);
+        .map(file => `/portofolio-compressed/${folder}/${file}`);
 
       return {
         folder,
