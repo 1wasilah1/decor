@@ -55,3 +55,13 @@ h1, h2, h3, h4, h5, h6 {
 .bg-woodmart-secondary { background-color: var(--woodmart-secondary); }
 .text-woodmart-accent { color: var(--woodmart-accent); }
 .bg-woodmart-accent { background-color: var(--woodmart-accent); }
+
+/* Hide unwanted loading indicators */
+.fixed .animate-spin:not(.portfolio-loading) {
+  display: none !important;
+}
+
+/* Hide any white circles or loading overlays */
+.fixed > div:has(.animate-spin):not(.portfolio-container) {
+  display: none !important;
+}

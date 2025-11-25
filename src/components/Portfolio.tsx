@@ -39,6 +39,7 @@ export default function Portfolio() {
   const [isVisible, setIsVisible] = useState(false);
   const [selectedServiceType, setSelectedServiceType] = useState<string | null>(null);
   const [filteredData, setFilteredData] = useState<PortfolioFolder[]>([]);
+  const [isMapping, setIsMapping] = useState(false);
 
   const getImageUrl = (image: string | MediaData, type: 'thumbnail' | 'fullsize' = 'thumbnail'): string => {
     if (typeof image === 'string') return image;
@@ -110,6 +111,10 @@ export default function Portfolio() {
     const handleFilterPortfolio = (event: CustomEvent) => {
       const { serviceTitle } = event.detail;
       
+      // Show mapping loading state
+      setIsMapping(true);
+      setIsVisible(false);
+      
       // Map service titles to correct service types
       const serviceMap: Record<string, string> = {
         'Exhibition Booth Design (Custom Design)': 'Exhibition Booth Design and Build',
@@ -125,18 +130,22 @@ export default function Portfolio() {
       
       const matchedServiceType = serviceMap[serviceTitle] || serviceTitle;
       
-      // Filter portfolio data by service type
-      const filtered = portfolioData.filter(folder => 
-        folder.serviceType === matchedServiceType
-      );
-      
-      if (filtered.length > 0) {
-        setSelectedServiceType(matchedServiceType);
-        setFilteredData(filtered);
-        setIsVisible(true);
-        setActiveTab(0);
-        setShowAll(false);
-      }
+      // Simulate mapping delay
+      setTimeout(() => {
+        // Filter portfolio data by service type
+        const filtered = portfolioData.filter(folder => 
+          folder.serviceType === matchedServiceType
+        );
+        
+        if (filtered.length > 0) {
+          setSelectedServiceType(matchedServiceType);
+          setFilteredData(filtered);
+          setIsVisible(true);
+          setActiveTab(0);
+          setShowAll(false);
+        }
+        setIsMapping(false);
+      }, 800);
     };
     
     window.addEventListener('filterPortfolio', handleFilterPortfolio as EventListener);
@@ -154,8 +163,8 @@ export default function Portfolio() {
     }
   }, [portfolioData, selectedServiceType]);
 
-  // Show loading animation when not visible but data is loading
-  const showLoading = !isVisible && portfolioData.length === 0;
+  // Show loading animation when mapping or data is loading
+  const showLoading = isMapping || (!isVisible && portfolioData.length === 0);
   const sectionClass = isVisible ? "py-20 bg-white" : showLoading ? "py-20 bg-white" : "py-20 bg-white hidden";
 
   return (
@@ -173,15 +182,15 @@ export default function Portfolio() {
         {showLoading ? (
           <div className="text-center py-20">
             <div className="flex justify-center items-center space-x-2 mb-6">
-              <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
-              <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
-              <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
+              <div className="w-3 h-3 bg-black rounded-full animate-bounce" style={{animationDelay: '0ms'}}></div>
+              <div className="w-3 h-3 bg-black rounded-full animate-bounce" style={{animationDelay: '150ms'}}></div>
+              <div className="w-3 h-3 bg-black rounded-full animate-bounce" style={{animationDelay: '300ms'}}></div>
             </div>
             <div className="flex justify-center items-end space-x-1 mb-6">
               {[...Array(15)].map((_, i) => (
                 <div 
                   key={i}
-                  className="bg-gradient-to-t from-blue-400 to-blue-600 rounded-full animate-pulse"
+                  className="bg-gradient-to-t from-gray-700 to-black rounded-full animate-pulse"
                   style={{
                     width: '4px',
                     height: `${20 + Math.sin(i * 0.5) * 15}px`,
@@ -233,18 +242,18 @@ export default function Portfolio() {
                       <div className="relative h-64">
                         {isVideo(image) ? (
                           <>
-                            <video 
-                              className="w-full h-full object-cover rounded-lg"
-                              poster={getImageUrl(image, 'thumbnail')}
-                              preload="metadata"
-                            >
-                              <source src={getImageUrl(image, 'fullsize')} type="video/mp4" />
-                            </video>
-                            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-30">
-                              <div className="w-16 h-16 bg-white bg-opacity-80 rounded-full flex items-center justify-center">
-                                <svg className="w-8 h-8 text-black ml-1" fill="currentColor" viewBox="0 0 24 24">
-                                  <path d="M8 5v14l11-7z"/>
-                                </svg>
+                            <div className="relative w-full h-full">
+                              <img 
+                                src={getImageUrl(image, 'thumbnail')}
+                                alt={`${filteredData[activeTab].folder} video thumbnail`}
+                                className="w-full h-full object-cover rounded-lg"
+                              />
+                              <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-40">
+                                <div className="w-16 h-16 bg-white bg-opacity-90 rounded-full flex items-center justify-center shadow-lg">
+                                  <svg className="w-8 h-8 text-black ml-1" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                  </svg>
+                                </div>
                               </div>
                             </div>
                           </>
@@ -258,7 +267,7 @@ export default function Portfolio() {
                               alt={`${filteredData[activeTab].folder} ${imageIndex + 1}`}
                               fill
                               className="object-cover transition-transform duration-300 group-hover:scale-105"
-                              quality={10}
+                              quality={15}
                               sizes="(max-width: 768px) 200px, (max-width: 1024px) 250px, 300px"
                               loading="lazy"
                               priority={imageIndex < 4}
