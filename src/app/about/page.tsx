@@ -2,6 +2,7 @@
 
 import { LanguageProvider } from '@/contexts/LanguageContext';
 import Header from '@/components/Header';
+import About from '@/components/About';
 import VisionMission from '@/components/VisionMission';
 import WorkingProcess from '@/components/WorkingProcess';
 import Footer from '@/components/Footer';
@@ -12,6 +13,7 @@ export default function AboutPage() {
     <LanguageProvider>
       <div className="min-h-screen">
         <Header />
+        <About />
         <VisionMission />
         <WorkingProcess />
         <Footer />
