@@ -326,18 +326,39 @@ export default function Portfolio() {
             </button>
 
             <div className="relative max-w-7xl max-h-[90vh] w-full h-full" onClick={(e) => e.stopPropagation()}>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-white"></div>
-              </div>
-              <Image
-                src={selectedImage}
-                alt="Portfolio"
-                fill
-                className="object-contain"
-                quality={60}
-                priority
-                sizes="90vw"
-              />
+              {isVideo(filteredData[activeTab]?.images[selectedIndex]) ? (
+                <video
+                  src={selectedImage}
+                  controls
+                  autoPlay
+                  className="w-full h-full object-contain"
+                  onError={() => console.error('Video failed to load:', selectedImage)}
+                >
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-white"></div>
+                  </div>
+                  <Image
+                    src={selectedImage}
+                    alt="Portfolio"
+                    fill
+                    className="object-contain"
+                    quality={60}
+                    priority
+                    sizes="90vw"
+                    onError={(e) => {
+                      console.error('Image failed to load:', selectedImage);
+                      const currentImage = filteredData[activeTab]?.images[selectedIndex];
+                      if (currentImage && typeof currentImage !== 'string') {
+                        e.currentTarget.src = currentImage.thumbnail;
+                      }
+                    }}
+                  />
+                </>
+              )}
             </div>
 
             {/* Image Counter */}
