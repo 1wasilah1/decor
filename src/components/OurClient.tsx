@@ -35,9 +35,9 @@ export default function OurClient() {
             <p className="text-gray-600">Loading...</p>
           </div>
         ) : logos.length > 0 ? (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 max-w-5xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-8 max-w-4xl mx-auto">
             {logos.map((logo, index) => (
-              <div key={index} className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
+              <div key={index} className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow w-48 h-32">
                 <div className="relative w-full h-24">
                   <Image
                     src={logo}
