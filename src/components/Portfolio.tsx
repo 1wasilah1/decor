@@ -341,14 +341,10 @@ export default function Portfolio() {
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-white"></div>
                   </div>
-                  <Image
+                  <img
                     src={selectedImage}
                     alt="Portfolio"
-                    fill
-                    className="object-contain"
-                    quality={60}
-                    priority
-                    sizes="90vw"
+                    className="w-full h-full object-contain"
                     onError={(e) => {
                       console.error('Image failed to load:', selectedImage);
                       const currentImage = filteredData[activeTab]?.images[selectedIndex];
@@ -356,6 +352,7 @@ export default function Portfolio() {
                         e.currentTarget.src = currentImage.thumbnail;
                       }
                     }}
+                    onLoad={() => console.log('Image loaded successfully:', selectedImage)}
                   />
                 </>
               )}
