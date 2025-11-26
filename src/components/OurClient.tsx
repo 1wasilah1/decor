@@ -35,7 +35,7 @@ export default function OurClient() {
             <p className="text-gray-600">Loading...</p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 max-w-5xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-8 max-w-5xl mx-auto">
             {logos.map((logo, index) => (
               <div key={index} className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
                 <div className="relative w-full h-24">
