@@ -35,7 +35,8 @@ export default function OurClient() {
             <p className="text-gray-600">Loading...</p>
           </div>
         ) : (
-          <div className="flex flex-wrap justify-center gap-8 max-w-5xl mx-auto">
+          <div className="flex justify-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-3xl">
             {logos.map((logo, index) => (
               <div key={index} className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
                 <div className="relative w-full h-24">
@@ -49,6 +50,7 @@ export default function OurClient() {
                 </div>
               </div>
             ))}
+            </div>
           </div>
         )}
       </div>
