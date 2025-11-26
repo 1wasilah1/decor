@@ -34,9 +34,8 @@ export default function OurClient() {
           <div className="text-center py-12">
             <p className="text-gray-600">Loading...</p>
           </div>
-        ) : (
-          <div className="flex justify-center">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 max-w-3xl">
+        ) : logos.length > 0 ? (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 max-w-5xl mx-auto">
             {logos.map((logo, index) => (
               <div key={index} className="flex items-center justify-center p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow">
                 <div className="relative w-full h-24">
@@ -50,7 +49,10 @@ export default function OurClient() {
                 </div>
               </div>
             ))}
-            </div>
+          </div>
+        ) : (
+          <div className="text-center py-12">
+            <p className="text-gray-600">No client logos available</p>
           </div>
         )}
       </div>

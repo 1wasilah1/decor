@@ -260,7 +260,8 @@
     }
   ],
   "clientLogos": [
-    "https://drive.google.com/thumbnail?id=FILE_ID_1&sz=w400",
-    "https://drive.google.com/thumbnail?id=FILE_ID_2&sz=w400"
+    "/images/client/client1.jpg",
+    "/images/client/client2.png",
+    "/images/client/client3.png"
   ]
 }
